@@ -787,6 +787,10 @@ function renderPages(){
   renderLog(APP_STATE);
   renderSettingsPage();
   renderMainMenuPage();
+  renderKdvRobotPage();
+  renderVirmanControlPage();
+  renderTenantsPage();
+  renderAccountingModePage();
 }
 function renderAutoControlPage(){
   const el = document.getElementById('autoControlPage');
@@ -913,6 +917,202 @@ function applyGlobalSearch(query){
   });
 }
 
+function renderKdvRobotPage(){
+  const el = document.getElementById('page-kontax');
+  if (!el) return;
+  const state = APP_STATE;
+  const summary = state.summary || {};
+  const kdvRobot = summary.kdvRobot || {};
+  const target = el.querySelector('.grid');
+  if (!target) return;
+  target.innerHTML = `
+    <div class="card" style="grid-column:span 12">
+      <div class="card-head"><span class="card-ico">🟨</span><div class="card-label">KDV Robotu &amp; Konaklama Vergisi<br><b>391 · 360 · 3026 Kontrolü</b></div><div class="card-actions"><button class="card-act-btn" onclick="downloadKdvCsv()">CSV İndir</button><button class="card-act-btn" onclick="navigateTo('dashboard')">Geri Dön</button></div></div>
+      <div class="metric-grid">
+        <div class="metric-box">
+          <div class="metric-label">KDV %10 Durumu</div>
+          <div class="metric-val">${fmtTL(kdvRobot.kdv10Actual || 0)}</div>
+          <div class="kpi-sub">Beklenen: ${fmtTL(kdvRobot.kdv10Expected || 0)} · Fark: ${pill(kdvRobot.kdv10Diff <= 1 ? 'MUTABIK' : kdvRobot.kdv10Diff <= 1000 ? 'ORTA FARK' : 'KRİTİK FARK')}</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">KDV %20 Durumu</div>
+          <div class="metric-val">${fmtTL(kdvRobot.kdv20Actual || 0)}</div>
+          <div class="kpi-sub">Beklenen: ${fmtTL(kdvRobot.kdv20Expected || 0)} · Fark: ${pill(kdvRobot.kdv20Diff <= 1 ? 'MUTABIK' : kdvRobot.kdv20Diff <= 1000 ? 'ORTA FARK' : 'KRİTİK FARK')}</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Konaklama Vergisi</div>
+          <div class="metric-val">${fmtTL(kdvRobot.accTaxActual || 0)}</div>
+          <div class="kpi-sub">360.01.01.0016 · Fark: ${kdvRobot.accTaxDiff || '—'}</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Genel Durum</div>
+          <div class="metric-val" style="color:${kdvRobot.status === 'MUTABIK' ? '#10b981' : kdvRobot.status === 'ORTA FARK' ? '#f59e0b' : '#ef4444'}">${kdvRobot.status || 'VERİ YOK'}</div>
+          <div class="kpi-sub">${kdvRobot.remarks || 'Kontrol yapılıyor'}</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 12">
+      <div class="card-head"><span class="card-ico">📋</span><div class="card-label">KDV Kontrol Tablosu</div></div>
+      <table class="tbl"><thead><tr><th>Oran</th><th>Fiili (391)</th><th>Beklenen</th><th>Fark</th><th>Durum</th><th>Yapılacak</th></tr></thead><tbody>
+        <tr><td>%10</td><td>${fmtTL(kdvRobot.kdv10Actual || 0)}</td><td>${fmtTL(kdvRobot.kdv10Expected || 0)}</td><td>${fmtTL(kdvRobot.kdv10Diff || 0)}</td><td>${pill(kdvRobot.kdv10Diff <= 1 ? 'MUTABIK' : kdvRobot.kdv10Diff <= 1000 ? 'ORTA FARK' : 'KRİTİK FARK')}</td><td>391.01.01.0002 kontrol</td></tr>
+        <tr><td>%20</td><td>${fmtTL(kdvRobot.kdv20Actual || 0)}</td><td>${fmtTL(kdvRobot.kdv20Expected || 0)}</td><td>${fmtTL(kdvRobot.kdv20Diff || 0)}</td><td>${pill(kdvRobot.kdv20Diff <= 1 ? 'MUTABIK' : kdvRobot.kdv20Diff <= 1000 ? 'ORTA FARK' : 'KRİTİK FARK')}</td><td>391.01.01.0003 kontrol</td></tr>
+        <tr><td>Konaklama Vergisi</td><td>${fmtTL(kdvRobot.accTaxActual || 0)}</td><td>${fmtTL(kdvRobot.accTaxExpected || 0)}</td><td>${fmtTL(kdvRobot.accTaxDiff || 0)}</td><td>${pill(kdvRobot.accTaxDiff <= 1 ? 'MUTABIK' : kdvRobot.accTaxDiff <= 1000 ? 'ORTA FARK' : 'KRİTİK FARK')}</td><td>360.01.01.0016 kontrol</td></tr>
+      </tbody></table>
+    </div>
+  `;
+}
+function renderVirmanControlPage(){
+  const el = document.getElementById('page-virman-control');
+  if (!el) return;
+  const state = APP_STATE;
+  const summary = state.summary || {};
+  const virman = summary.virmanRobot || {};
+  const target = el.querySelector('.grid');
+  if (!target) return;
+  target.innerHTML = `
+    <div class="card" style="grid-column:span 12">
+      <div class="card-head"><span class="card-ico">🔁</span><div class="card-label">Virman &amp; Mahsup Kontrol<br><b>120/340 Virman · 191/391 Mahsup · Döviz Etkisi</b></div><div class="card-actions"><button class="card-act-btn" onclick="downloadVirmanCsv()">CSV İndir</button><button class="card-act-btn" onclick="navigateTo('dashboard')">Geri Dön</button></div></div>
+      <div class="metric-grid">
+        <div class="metric-box">
+          <div class="metric-label">Virman Adayı</div>
+          <div class="metric-val">${virman.candidates || 0}</div>
+          <div class="kpi-sub">120 borç + 340 avans eşleştirmesi</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Virman Tutarı</div>
+          <div class="metric-val">${fmtTL(virman.totalAmount || 0)}</div>
+          <div class="kpi-sub">Toplam cari ve avans</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Riskli Virman</div>
+          <div class="metric-val" style="color:#ef4444">${virman.withRisk || 0}</div>
+          <div class="kpi-sub">Farklı lokasyon avansları</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Döviz Mahsup Etkisi (191)</div>
+          <div class="metric-val">${fmtTL(virman.kur191Effect || 0)}</div>
+          <div class="kpi-sub">${virman.kur191Effect > 10000 ? 'Yüksek etkili' : 'Düşük etkili'}</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 12">
+      <div class="card-head"><span class="card-ico">📊</span><div class="card-label">Virman Kontrol Özeti</div></div>
+      <table class="tbl"><thead><tr><th>Virman Tipi</th><th>Sayı</th><th>Tutar</th><th>Durum</th><th>Aksiyon</th></tr></thead><tbody>
+        <tr><td>120.01.06/340.01.06 (Otel Kiracı)</td><td>${virman.candidates || 0}</td><td>${fmtTL(virman.totalAmount || 0)}</td><td>${pill(virman.status || 'İNCELEME')}</td><td>Virman fişi öner</td></tr>
+        <tr><td>191 Döviz Etkisi</td><td>—</td><td>${fmtTL(virman.kur191Effect || 0)}</td><td>${virman.kur191Effect > 1000 ? pill('UYARI') : pill('OK')}</td><td>Mahsup kontrol</td></tr>
+        <tr><td>679/689 Yuvarlama/Düzeltme</td><td>—</td><td>${fmtTL(virman.adj679Effect || 0)}</td><td>${virman.adj679Effect > 0 ? pill('UYARI') : pill('OK')}</td><td>Düzeltme kaydı kontrol</td></tr>
+      </tbody></table>
+    </div>
+  `;
+}
+function renderTenantsPage(){
+  const el = document.getElementById('page-tenants');
+  if (!el) return;
+  const state = APP_STATE;
+  const summary = state.summary || {};
+  const kiraci = summary.kiraci || {};
+  const target = el.querySelector('.grid');
+  if (!target) return;
+  target.innerHTML = `
+    <div class="card" style="grid-column:span 12">
+      <div class="card-head"><span class="card-ico">🏬</span><div class="card-label">Kiracı &amp; Acente Yönetimi<br><b>120.01.06/07/01 · 340.01.06/07/01 Ayrımı</b></div><div class="card-actions"><button class="card-act-btn" onclick="downloadTenantsCsv()">CSV İndir</button><button class="card-act-btn" onclick="navigateTo('dashboard')">Geri Dön</button></div></div>
+      <div class="metric-grid">
+        <div class="metric-box">
+          <div class="metric-label">Otel Kiracı (120.01.06)</div>
+          <div class="metric-val">${kiraci.otelCari || 0}</div>
+          <div class="kpi-sub">Açık borç/cari sayısı</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Otel Avansı (340.01.06)</div>
+          <div class="metric-val">${kiraci.otelAvans || 0}</div>
+          <div class="kpi-sub">Peşin/avans sayısı</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">AVM Kiracı (120.01.07)</div>
+          <div class="metric-val">${kiraci.avmCari || 0}</div>
+          <div class="kpi-sub">AVM cari borçları</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">AVM Avansı (340.01.07)</div>
+          <div class="metric-val">${kiraci.avmAvans || 0}</div>
+          <div class="kpi-sub">AVM peşin tutarları</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 6">
+      <div class="card-head"><span class="card-ico">👥</span><div class="card-label">Acenteler (120.01.01 / 340.01.01)</div></div>
+      <div class="metric-grid" style="grid-template-columns:1fr 1fr">
+        <div class="metric-box"><div class="metric-label">Acente Carisi</div><div class="metric-val">${kiraci.acenteCari || 0}</div></div>
+        <div class="metric-box"><div class="metric-label">Acente Avansı</div><div class="metric-val">${kiraci.acenteAvans || 0}</div></div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 6">
+      <div class="card-head"><span class="card-ico">💰</span><div class="card-label">Virman Fırsat</div></div>
+      <div class="metric-grid" style="grid-template-columns:1fr 1fr">
+        <div class="metric-box"><div class="metric-label">Virman Adayı</div><div class="metric-val" style="color:#f59e0b">${kiraci.virmanOpportunity || 0}</div></div>
+        <div class="metric-box"><div class="metric-label">Virman Tutarı</div><div class="metric-val">${fmtTL(kiraci.totalVirmanAmount || 0)}</div></div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 12">
+      <div class="card-head"><span class="card-ico">📋</span><div class="card-label">Kiracı Listesi Özeti</div></div>
+      <table class="tbl"><thead><tr><th>Kiracı Türü</th><th>Hesap Kodu</th><th>Sayı</th><th>Virman?</th><th>Açıklama</th></tr></thead><tbody>
+        <tr><td style="font-weight:700">Otel Kiracı</td><td>120.01.06</td><td>${kiraci.otelCari}</td><td>${kiraci.otelCari > 0 ? '✅' : '—'}</td><td>Otel işletmesiyle kira sözleşmeli</td></tr>
+        <tr><td style="font-weight:700">Otel Avansı</td><td>340.01.06</td><td>${kiraci.otelAvans}</td><td>${kiraci.otelAvans > 0 ? '✅' : '—'}</td><td>Otel kiracısının peşin ödemesi</td></tr>
+        <tr><td style="font-weight:700">AVM Kiracı</td><td>120.01.07</td><td>${kiraci.avmCari}</td><td>${kiraci.avmCari > 0 ? '✅' : '—'}</td><td>Alışveriş merkezi kiracısı</td></tr>
+        <tr><td style="font-weight:700">AVM Avansı</td><td>340.01.07</td><td>${kiraci.avmAvans}</td><td>${kiraci.avmAvans > 0 ? '✅' : '—'}</td><td>AVM kiracısının peşin tutar</td></tr>
+        <tr><td style="font-weight:700">Acente</td><td>120.01.01</td><td>${kiraci.acenteCari}</td><td>${kiraci.acenteCari > 0 ? '✅' : '—'}</td><td>Turizm/tur operatörü</td></tr>
+      </tbody></table>
+    </div>
+  `;
+}
+function renderAccountingModePage(){
+  const el = document.getElementById('page-accounting-mode');
+  if (!el) return;
+  const state = APP_STATE;
+  const summary = state.summary || {};
+  const muhasebe = summary.muhasebeModu || {};
+  const target = el.querySelector('.grid');
+  if (!target) return;
+  const scoreColor = muhasebe.score >= 90 ? '#10b981' : muhasebe.score >= 75 ? '#3b82f6' : muhasebe.score >= 55 ? '#f59e0b' : '#ef4444';
+  const scoreLabel = muhasebe.score >= 90 ? 'ÜST SEVİYE' : muhasebe.score >= 75 ? 'GÜÇLÜ KONTROL' : muhasebe.score >= 55 ? 'GELİŞTİRİLECEK ALAN' : 'ACİL TEMİZLİK';
+  target.innerHTML = `
+    <div class="card" style="grid-column:span 12">
+      <div class="card-head"><span class="card-ico">🧑‍💼</span><div class="card-label">Muhasebe Denetim Modu<br><b>Kalite Kontrol · Risk Analiz · Aksiyon Listesi</b></div><div class="card-actions"><button class="card-act-btn" onclick="downloadAcctCsv()">Rapor İndir</button><button class="card-act-btn" onclick="navigateTo('dashboard')">Geri Dön</button></div></div>
+      <div style="text-align:center;padding:20px;background:rgba(0,0,0,.03);border-radius:8px;margin-bottom:16px">
+        <div style="font-size:48px;font-weight:700;color:${scoreColor}">${muhasebe.score || 0}</div>
+        <div style="font-size:14px;color:var(--muted);margin-top:4px">Muhasebe Denetim Skoru / 100</div>
+        <div style="font-size:16px;font-weight:600;color:${scoreColor};margin-top:8px">${scoreLabel}</div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 6">
+      <div class="card-head"><span class="card-ico">🔴</span><div class="card-label">Kritik Riskler (${(muhasebe.kritikRisk || []).length})</div></div>
+      <div class="note-rows">
+        ${(muhasebe.kritikRisk || []).slice(0,8).map(r => `<div class="note-row"><span class="note-ico">⚠</span><div class="note-text">${esc(r)}</div></div>`).join('')}
+        ${!(muhasebe.kritikRisk || []).length ? '<div class="note-row"><span class="note-ico">✅</span><div class="note-text">Kritik risk bulunmadı.</div></div>' : ''}
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 6">
+      <div class="card-head"><span class="card-ico">📝</span><div class="card-label">Aksiyon Önerileri</div></div>
+      <div class="note-rows">
+        <div class="note-row"><span class="note-ico">1️⃣</span><div class="note-text">Hesap kartları ve mizan bakiyeleri kontrol et.</div></div>
+        <div class="note-row"><span class="note-ico">2️⃣</span><div class="note-text">KDV beyannamesi hazırlığı yap.</div></div>
+        <div class="note-row"><span class="note-ico">3️⃣</span><div class="note-text">Virman ve mahsup fişleri öner.</div></div>
+        <div class="note-row"><span class="note-ico">4️⃣</span><div class="note-text">Yevmiye ve belge eksikliklerini tamamla.</div></div>
+      </div>
+    </div>
+    <div class="card" style="grid-column:span 12">
+      <div class="card-head"><span class="card-ico">📊</span><div class="card-label">Denetim Kontrol Listesi</div></div>
+      <table class="tbl"><thead><tr><th>Kontrol Alanı</th><th>Durum</th><th>Bulgu</th><th>Öneri</th></tr></thead><tbody>
+        <tr><td>181 ↔ 3010 Balans</td><td>${pill((summary.balanceStatus || 'VERİ YOK').substring(0,7))}</td><td>Fark: ${fmtTL(Math.abs(summary.balanceDiff || 0))}</td><td>Rapor kesiti kontrol</td></tr>
+        <tr><td>KDV Kontrolü (%10/%20)</td><td>${pill('KONTROL')}</td><td>Oran uyumu</td><td>391 hesap haritası</td></tr>
+        <tr><td>Virman/Mahsup (120/340)</td><td>${pill('KONTROL')}</td><td>Eşleştirilemeyen tutar</td><td>Virman fiş önerisi</td></tr>
+        <tr><td>Hesap Kartları Bütünlüğü</td><td>${pill('KONTROL')}</td><td>Belge eksikliği</td><td>Yevmiye tamlama</td></tr>
+        <tr><td>E-Defter Kalitesi</td><td>${pill('KONTROL')}</td><td>Tarih/Açıklama</td><td>Kayıt düzeltme</td></tr>
+      </tbody></table>
+    </div>
+  `;
+}
+
 // ─── BOOT ──────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   updateClock();
@@ -920,6 +1120,72 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCal();
   loadDashboardData();
 });
+
+function downloadKdvCsv(){
+  const summary = (APP_STATE.summary || {});
+  const kdv = summary.kdvRobot || {};
+  const rows = [['Oran','Fiili 391','Beklenen','Fark','Durum'],
+    ['%10', kdv.kdv10Actual||'—', kdv.kdv10Expected||'—', kdv.kdv10Diff||'—', kdv.kdv10Diff<=1?'MUTABIK':kdv.kdv10Diff<=1000?'ORTA FARK':'KRİTİK'],
+    ['%20', kdv.kdv20Actual||'—', kdv.kdv20Expected||'—', kdv.kdv20Diff||'—', kdv.kdv20Diff<=1?'MUTABIK':kdv.kdv20Diff<=1000?'ORTA FARK':'KRİTİK'],
+    ['Konaklama', kdv.accTaxActual||'—', kdv.accTaxExpected||'—', kdv.accTaxDiff||'—', kdv.accTaxDiff<=1?'MUTABIK':kdv.accTaxDiff<=1000?'ORTA FARK':'KRİTİK']
+  ];
+  const csv = rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `KDV_Robot_${isoNow().split(' ')[0]}.csv`;
+  link.click();
+}
+function downloadVirmanCsv(){
+  const summary = (APP_STATE.summary || {});
+  const virman = summary.virmanRobot || {};
+  const rows = [['Virman Tipi','Sayı','Tutar','Durum'],
+    ['120/340 Virman', virman.candidates||'—', virman.totalAmount||'—', virman.status||'İNCELEME'],
+    ['191 Döviz Etkisi', '—', virman.kur191Effect||'—', virman.kur191Effect>1000?'UYARI':'OK'],
+    ['679/689 Düzeltme', '—', virman.adj679Effect||'—', virman.adj679Effect>0?'UYARI':'OK']
+  ];
+  const csv = rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `Virman_Robot_${isoNow().split(' ')[0]}.csv`;
+  link.click();
+}
+function downloadTenantsCsv(){
+  const summary = (APP_STATE.summary || {});
+  const k = summary.kiraci || {};
+  const rows = [['Kiracı Türü','Hesap','Sayı','Açıklama'],
+    ['Otel Kiracı','120.01.06', k.otelCari||0, 'Otel işletme kiracısı'],
+    ['Otel Avansı','340.01.06', k.otelAvans||0, 'Peşin ödeme'],
+    ['AVM Kiracı','120.01.07', k.avmCari||0, 'Alışveriş merkezi kiracısı'],
+    ['AVM Avansı','340.01.07', k.avmAvans||0, 'AVM peşin tutar'],
+    ['Acente','120.01.01', k.acenteCari||0, 'Tur operatörü'],
+    ['Virman Toplam','—', k.totalVirmanAmount||0, 'Virman tutarı']
+  ];
+  const csv = rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `Kiracilar_${isoNow().split(' ')[0]}.csv`;
+  link.click();
+}
+function downloadAcctCsv(){
+  const summary = (APP_STATE.summary || {});
+  const m = summary.muhasebeModu || {};
+  const rows = [['Kontrol Alanı','Durum','Bulgu'],
+    ['181 ↔ 3010 Balans', summary.balanceStatus||'VERİ YOK', Math.abs(summary.balanceDiff||0)],
+    ['KDV Kontrolü', '—', 'Oran uyumu kontrol'],
+    ['Virman/Mahsup', '—', 'Eşleştirme kontrol'],
+    ['Hesap Bütünlüğü', '—', 'Belge eksikliği'],
+    ['Muhasebe Skoru', m.status||'GELİŞTİRİLECEK', `${m.score||0}/100`]
+  ];
+  const csv = rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `Muhasebe_Denetim_${isoNow().split(' ')[0]}.csv`;
+  link.click();
+}
 
 // Global exposure for inline onclick
 window.navigateTo = navigateTo;
