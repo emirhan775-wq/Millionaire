@@ -495,6 +495,11 @@ function startServer(){
   startFolderWatcher();
   http.createServer(async (req,res) => {
     const reqPath = req.url.split('?')[0];
+    if (reqPath === '/api/data') {
+      try { const data = JSON.parse(fs.readFileSync(OUT_JSON, 'utf8')); await sendJson(res, 200, data); }
+      catch (err) { await sendJson(res, 500, {ok:false, error:err.message}); }
+      return;
+    }
     if (reqPath === '/rebuild') {
       try { const dashboardData = buildData(); await sendJson(res, 200, {ok:true, mode:'folder', dashboardData, status:autoStatus(), message:'02_RAPORLAR klasörü yeniden okundu.'}); }
       catch (err) { await sendJson(res, 500, {ok:false, error:err.message, status:autoStatus({ok:false})}); }

@@ -2,7 +2,7 @@
   "currentHotelId": "ADAM_EVE",
   "meta": {
     "hotel": "BEŞ OTEL MUTABAKAT",
-    "lastUpdate": "30.06.2026 21:14:11",
+    "lastUpdate": "30.06.2026 21:14:46",
     "status": "OTOMATİK KLASÖR",
     "autoMode": "folder_first",
     "watcher": true,
@@ -15,7 +15,7 @@
       "short": "A&E",
       "meta": {
         "hotel": "ADAM & EVE OTEL",
-        "lastUpdate": "30.06.2026 21:14:11",
+        "lastUpdate": "30.06.2026 21:14:46",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -101,7 +101,7 @@
       ],
       "logs": [
         {
-          "time": "2026-06-30T21:14:11.186Z",
+          "time": "2026-06-30T21:14:46.222Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -117,7 +117,7 @@
       "short": "SEG",
       "meta": {
         "hotel": "SEGINUS OTEL",
-        "lastUpdate": "30.06.2026 21:14:11",
+        "lastUpdate": "30.06.2026 21:14:46",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -203,7 +203,7 @@
       ],
       "logs": [
         {
-          "time": "2026-06-30T21:14:11.186Z",
+          "time": "2026-06-30T21:14:46.222Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -219,7 +219,7 @@
       "short": "ALH",
       "meta": {
         "hotel": "ALHAMBRA OTEL",
-        "lastUpdate": "30.06.2026 21:14:11",
+        "lastUpdate": "30.06.2026 21:14:46",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -305,7 +305,7 @@
       ],
       "logs": [
         {
-          "time": "2026-06-30T21:14:11.186Z",
+          "time": "2026-06-30T21:14:46.222Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -321,7 +321,7 @@
       "short": "HOL",
       "meta": {
         "hotel": "HOLIDAY OTEL",
-        "lastUpdate": "30.06.2026 21:14:11",
+        "lastUpdate": "30.06.2026 21:14:46",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -407,7 +407,7 @@
       ],
       "logs": [
         {
-          "time": "2026-06-30T21:14:11.186Z",
+          "time": "2026-06-30T21:14:46.222Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -423,7 +423,7 @@
       "short": "DRG",
       "meta": {
         "hotel": "DRAGON OTEL",
-        "lastUpdate": "30.06.2026 21:14:11",
+        "lastUpdate": "30.06.2026 21:14:46",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -509,7 +509,7 @@
       ],
       "logs": [
         {
-          "time": "2026-06-30T21:14:11.186Z",
+          "time": "2026-06-30T21:14:46.222Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -587,7 +587,7 @@
   "alerts": [],
   "logs": [
     {
-      "time": "2026-06-30T21:14:11.186Z",
+      "time": "2026-06-30T21:14:46.222Z",
       "process": "Otomatik Klasör Taraması",
       "fileName": "02_RAPORLAR",
       "status": "Uyarı",
@@ -599,7 +599,7 @@
   "automation": {
     "mode": "folder",
     "ok": true,
-    "lastBuild": "30.06.2026 21:14:11",
+    "lastBuild": "30.06.2026 21:14:46",
     "fileCount": 0,
     "reportCount": 0,
     "errorCount": 0,
