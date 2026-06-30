@@ -1,0 +1,1 @@
+2026-06-30T10:34:42.894Z | Uyarı | Otomatik Klasör Taraması | 02_RAPORLAR | 02_RAPORLAR klasöründe okunacak Excel/CSV/JSON raporu bulunamadı. Dashboard boş veri ile açılır; rapor atılır atılmaz watcher otomatik yeniden okur. | 0 dosya
