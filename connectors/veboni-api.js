@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const XLSX = require('xlsx');
+let XLSX = null;
+try { XLSX = require('xlsx'); } catch { console.warn('[!] Veboni connector: XLSX bulunamadı'); }
 
 function normalizeBaseUrl(url){
   return String(url || '').trim().replace(/\/+$/, '');

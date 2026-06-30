@@ -1,8 +1,9 @@
-require('dotenv').config();
+try { require('dotenv').config(); } catch { console.warn('[!] dotenv bulunamadı - .env dosyası manual okunamayacak.'); }
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
-const XLSX = require('xlsx');
+let XLSX = null;
+try { XLSX = require('xlsx'); } catch { console.warn('[!] XLSX bulunamadı - Excel desteği kapalı. CSV/JSON kullanın.'); }
 const { VeboniConnector } = require('./connectors/veboni-api');
 
 const ROOT = __dirname;
@@ -103,17 +104,33 @@ function readReport(filePath){
     if (obj.raw) return [];
     return [obj];
   }
+  if (!XLSX) {
+    if (ext === '.csv') return parseCsvManually(filePath);
+    if (ext === '.xlsx' || ext === '.xlsm') return [];
+    return [];
+  }
   if (ext === '.csv') {
     const wb = XLSX.readFile(filePath, {type:'file', raw:false});
     const sheetName = wb.SheetNames[0];
     const matrix = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {header:1, defval:'', blankrows:false, raw:false});
     return matrixToRows(matrix);
   }
-  const wb = XLSX.readFile(filePath, {cellDates:true, raw:false});
-  const sheetName = wb.SheetNames[0];
-  if (!sheetName) return [];
-  const matrix = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {header:1, defval:'', blankrows:false, raw:false});
-  return matrixToRows(matrix);
+  try {
+    const wb = XLSX.readFile(filePath, {cellDates:true, raw:false});
+    const sheetName = wb.SheetNames[0];
+    if (!sheetName) return [];
+    const matrix = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {header:1, defval:'', blankrows:false, raw:false});
+    return matrixToRows(matrix);
+  } catch {
+    return [];
+  }
+}
+function parseCsvManually(filePath){
+  const content = fs.readFileSync(filePath, 'utf8');
+  const lines = content.split('\n').map(l => l.trim()).filter(l => l);
+  if (!lines.length) return [];
+  const rows = lines.map(l => l.split(',').map(c => c.replace(/^"(.*)"$/, '$1')));
+  return matrixToRows(rows);
 }
 function parseAmount(value){
   if (typeof value === 'number') return Number.isFinite(value) ? value : 0;
@@ -156,7 +173,7 @@ function calculateKdvRobot(raw){
   const sum = (rows, terms) => rows.filter(r => terms.some(t => rowText(r).includes(normalizeText(t)))).reduce((s,r)=>s+firstNum(r),0);
   const rowText = row => normalizeText(Object.values(row||{}).join(' '));
   const firstNum = row => {const v=Object.values(row||{}).map(parseAmount).filter(n=>n!==0);return v.length?v[0]:0;};
-  const parseAmount = value => {if(typeof value==='number')return Number.isFinite(value)?value:0; let s=String(value??'').trim(); if(!s)return 0; let neg=/\((.*?)\)/.test(s)||/-$/.test(s); s=s.replace(/\((.*?)\)/g,'$1').replace(/[^0-9,.\-]/g,''); const lastComma=s.lastIndexOf(','),lastDot=s.lastIndexOf('.'); if(lastComma>lastDot)s=s.replace(/\./g,'').replace(',',.); else if(lastDot>lastComma)s=s.replace(/,/g,''); const n=Number(s); return Number.isFinite(n)?(neg&&n>0?-n:n):0;};
+  const parseAmount = value => {if(typeof value==='number')return Number.isFinite(value)?value:0; let s=String(value??'').trim(); if(!s)return 0; let neg=/\((.*?)\)/.test(s)||/-$/.test(s); s=s.replace(/\((.*?)\)/g,'$1').replace(/[^0-9,.\-]/g,''); const lastComma=s.lastIndexOf(','),lastDot=s.lastIndexOf('.'); if(lastComma>lastDot)s=s.replace(/\./g,'').replace(',','.'); else if(lastDot>lastComma)s=s.replace(/,/g,''); const n=Number(s); return Number.isFinite(n)?(neg&&n>0?-n:n):0;};
   const normalizeText = text => String(text??'').replace(/İ/g,'I').replace(/ş/g,'S').replace(/Ğ/g,'G').replace(/Ü/g,'U').replace(/Ö/g,'O').replace(/Ç/g,'C').toUpperCase().trim();
 
   kdvData.kdv10Actual = Math.abs(sum(r391, ['391.01.01.0002','KDV 10'])) || Math.abs(sum(r3026, ['391','%10']));

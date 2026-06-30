@@ -2,7 +2,7 @@
   "currentHotelId": "ADAM_EVE",
   "meta": {
     "hotel": "BEŞ OTEL MUTABAKAT",
-    "lastUpdate": "30.06.2026 10:34:42",
+    "lastUpdate": "30.06.2026 21:14:11",
     "status": "OTOMATİK KLASÖR",
     "autoMode": "folder_first",
     "watcher": true,
@@ -15,7 +15,7 @@
       "short": "A&E",
       "meta": {
         "hotel": "ADAM & EVE OTEL",
-        "lastUpdate": "30.06.2026 10:34:42",
+        "lastUpdate": "30.06.2026 21:14:11",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -43,12 +43,65 @@
         "kdv10": 0,
         "kdv20": 0,
         "accommodationTax": 0,
-        "extraTotal": 0
+        "extraTotal": 0,
+        "kdvRobot": {
+          "kdv10Expected": 0,
+          "kdv10Actual": 0,
+          "kdv10Diff": 0,
+          "kdv20Expected": 0,
+          "kdv20Actual": 0,
+          "kdv20Diff": 0,
+          "accTaxExpected": 0,
+          "accTaxActual": 0,
+          "accTaxDiff": 0,
+          "status": "VERİ YOK",
+          "remarks": "3026 ve 391 hesapları raporundan veri yok."
+        },
+        "virmanRobot": {
+          "candidates": 0,
+          "totalAmount": 0,
+          "withRisk": 0,
+          "kur191Effect": 0,
+          "adj679Effect": 0,
+          "status": "MUTABIK",
+          "remarks": "Virman adayı: 0, Döviz etkisi: Düşük, Düzeltme etkisi: Yok"
+        },
+        "kiraci": {
+          "otelCari": 0,
+          "otelAvans": 0,
+          "avmCari": 0,
+          "avmAvans": 0,
+          "acenteCari": 0,
+          "acenteAvans": 0,
+          "virmanOpportunity": 0,
+          "totalVirmanAmount": 0
+        },
+        "muhasebeModu": {
+          "score": 50,
+          "kritikRisk": [],
+          "fisSuggestions": [],
+          "status": "ACİL MUHASEBE TEMİZLİĞİ"
+        }
       },
-      "alerts": [],
+      "alerts": [
+        {
+          "type": "ok",
+          "ico": "✅",
+          "title": "MUTABIK: 181 ↔ 3010",
+          "desc": "Balans kontrolü uyumlu.",
+          "actionRequired": false
+        },
+        {
+          "type": "info",
+          "ico": "ℹ",
+          "title": "Hesap Kartları Eksik",
+          "desc": "Mizan veya hesap kartları raporu bulunamadı. 120/340/391 analizleri sınırlı.",
+          "actionRequired": false
+        }
+      ],
       "logs": [
         {
-          "time": "2026-06-30T10:34:42.894Z",
+          "time": "2026-06-30T21:14:11.186Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -64,7 +117,7 @@
       "short": "SEG",
       "meta": {
         "hotel": "SEGINUS OTEL",
-        "lastUpdate": "30.06.2026 10:34:42",
+        "lastUpdate": "30.06.2026 21:14:11",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -92,12 +145,65 @@
         "kdv10": 0,
         "kdv20": 0,
         "accommodationTax": 0,
-        "extraTotal": 0
+        "extraTotal": 0,
+        "kdvRobot": {
+          "kdv10Expected": 0,
+          "kdv10Actual": 0,
+          "kdv10Diff": 0,
+          "kdv20Expected": 0,
+          "kdv20Actual": 0,
+          "kdv20Diff": 0,
+          "accTaxExpected": 0,
+          "accTaxActual": 0,
+          "accTaxDiff": 0,
+          "status": "VERİ YOK",
+          "remarks": "3026 ve 391 hesapları raporundan veri yok."
+        },
+        "virmanRobot": {
+          "candidates": 0,
+          "totalAmount": 0,
+          "withRisk": 0,
+          "kur191Effect": 0,
+          "adj679Effect": 0,
+          "status": "MUTABIK",
+          "remarks": "Virman adayı: 0, Döviz etkisi: Düşük, Düzeltme etkisi: Yok"
+        },
+        "kiraci": {
+          "otelCari": 0,
+          "otelAvans": 0,
+          "avmCari": 0,
+          "avmAvans": 0,
+          "acenteCari": 0,
+          "acenteAvans": 0,
+          "virmanOpportunity": 0,
+          "totalVirmanAmount": 0
+        },
+        "muhasebeModu": {
+          "score": 50,
+          "kritikRisk": [],
+          "fisSuggestions": [],
+          "status": "ACİL MUHASEBE TEMİZLİĞİ"
+        }
       },
-      "alerts": [],
+      "alerts": [
+        {
+          "type": "ok",
+          "ico": "✅",
+          "title": "MUTABIK: 181 ↔ 3010",
+          "desc": "Balans kontrolü uyumlu.",
+          "actionRequired": false
+        },
+        {
+          "type": "info",
+          "ico": "ℹ",
+          "title": "Hesap Kartları Eksik",
+          "desc": "Mizan veya hesap kartları raporu bulunamadı. 120/340/391 analizleri sınırlı.",
+          "actionRequired": false
+        }
+      ],
       "logs": [
         {
-          "time": "2026-06-30T10:34:42.894Z",
+          "time": "2026-06-30T21:14:11.186Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -113,7 +219,7 @@
       "short": "ALH",
       "meta": {
         "hotel": "ALHAMBRA OTEL",
-        "lastUpdate": "30.06.2026 10:34:42",
+        "lastUpdate": "30.06.2026 21:14:11",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -141,12 +247,65 @@
         "kdv10": 0,
         "kdv20": 0,
         "accommodationTax": 0,
-        "extraTotal": 0
+        "extraTotal": 0,
+        "kdvRobot": {
+          "kdv10Expected": 0,
+          "kdv10Actual": 0,
+          "kdv10Diff": 0,
+          "kdv20Expected": 0,
+          "kdv20Actual": 0,
+          "kdv20Diff": 0,
+          "accTaxExpected": 0,
+          "accTaxActual": 0,
+          "accTaxDiff": 0,
+          "status": "VERİ YOK",
+          "remarks": "3026 ve 391 hesapları raporundan veri yok."
+        },
+        "virmanRobot": {
+          "candidates": 0,
+          "totalAmount": 0,
+          "withRisk": 0,
+          "kur191Effect": 0,
+          "adj679Effect": 0,
+          "status": "MUTABIK",
+          "remarks": "Virman adayı: 0, Döviz etkisi: Düşük, Düzeltme etkisi: Yok"
+        },
+        "kiraci": {
+          "otelCari": 0,
+          "otelAvans": 0,
+          "avmCari": 0,
+          "avmAvans": 0,
+          "acenteCari": 0,
+          "acenteAvans": 0,
+          "virmanOpportunity": 0,
+          "totalVirmanAmount": 0
+        },
+        "muhasebeModu": {
+          "score": 50,
+          "kritikRisk": [],
+          "fisSuggestions": [],
+          "status": "ACİL MUHASEBE TEMİZLİĞİ"
+        }
       },
-      "alerts": [],
+      "alerts": [
+        {
+          "type": "ok",
+          "ico": "✅",
+          "title": "MUTABIK: 181 ↔ 3010",
+          "desc": "Balans kontrolü uyumlu.",
+          "actionRequired": false
+        },
+        {
+          "type": "info",
+          "ico": "ℹ",
+          "title": "Hesap Kartları Eksik",
+          "desc": "Mizan veya hesap kartları raporu bulunamadı. 120/340/391 analizleri sınırlı.",
+          "actionRequired": false
+        }
+      ],
       "logs": [
         {
-          "time": "2026-06-30T10:34:42.894Z",
+          "time": "2026-06-30T21:14:11.186Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -162,7 +321,7 @@
       "short": "HOL",
       "meta": {
         "hotel": "HOLIDAY OTEL",
-        "lastUpdate": "30.06.2026 10:34:42",
+        "lastUpdate": "30.06.2026 21:14:11",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -190,12 +349,65 @@
         "kdv10": 0,
         "kdv20": 0,
         "accommodationTax": 0,
-        "extraTotal": 0
+        "extraTotal": 0,
+        "kdvRobot": {
+          "kdv10Expected": 0,
+          "kdv10Actual": 0,
+          "kdv10Diff": 0,
+          "kdv20Expected": 0,
+          "kdv20Actual": 0,
+          "kdv20Diff": 0,
+          "accTaxExpected": 0,
+          "accTaxActual": 0,
+          "accTaxDiff": 0,
+          "status": "VERİ YOK",
+          "remarks": "3026 ve 391 hesapları raporundan veri yok."
+        },
+        "virmanRobot": {
+          "candidates": 0,
+          "totalAmount": 0,
+          "withRisk": 0,
+          "kur191Effect": 0,
+          "adj679Effect": 0,
+          "status": "MUTABIK",
+          "remarks": "Virman adayı: 0, Döviz etkisi: Düşük, Düzeltme etkisi: Yok"
+        },
+        "kiraci": {
+          "otelCari": 0,
+          "otelAvans": 0,
+          "avmCari": 0,
+          "avmAvans": 0,
+          "acenteCari": 0,
+          "acenteAvans": 0,
+          "virmanOpportunity": 0,
+          "totalVirmanAmount": 0
+        },
+        "muhasebeModu": {
+          "score": 50,
+          "kritikRisk": [],
+          "fisSuggestions": [],
+          "status": "ACİL MUHASEBE TEMİZLİĞİ"
+        }
       },
-      "alerts": [],
+      "alerts": [
+        {
+          "type": "ok",
+          "ico": "✅",
+          "title": "MUTABIK: 181 ↔ 3010",
+          "desc": "Balans kontrolü uyumlu.",
+          "actionRequired": false
+        },
+        {
+          "type": "info",
+          "ico": "ℹ",
+          "title": "Hesap Kartları Eksik",
+          "desc": "Mizan veya hesap kartları raporu bulunamadı. 120/340/391 analizleri sınırlı.",
+          "actionRequired": false
+        }
+      ],
       "logs": [
         {
-          "time": "2026-06-30T10:34:42.894Z",
+          "time": "2026-06-30T21:14:11.186Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -211,7 +423,7 @@
       "short": "DRG",
       "meta": {
         "hotel": "DRAGON OTEL",
-        "lastUpdate": "30.06.2026 10:34:42",
+        "lastUpdate": "30.06.2026 21:14:11",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -239,12 +451,65 @@
         "kdv10": 0,
         "kdv20": 0,
         "accommodationTax": 0,
-        "extraTotal": 0
+        "extraTotal": 0,
+        "kdvRobot": {
+          "kdv10Expected": 0,
+          "kdv10Actual": 0,
+          "kdv10Diff": 0,
+          "kdv20Expected": 0,
+          "kdv20Actual": 0,
+          "kdv20Diff": 0,
+          "accTaxExpected": 0,
+          "accTaxActual": 0,
+          "accTaxDiff": 0,
+          "status": "VERİ YOK",
+          "remarks": "3026 ve 391 hesapları raporundan veri yok."
+        },
+        "virmanRobot": {
+          "candidates": 0,
+          "totalAmount": 0,
+          "withRisk": 0,
+          "kur191Effect": 0,
+          "adj679Effect": 0,
+          "status": "MUTABIK",
+          "remarks": "Virman adayı: 0, Döviz etkisi: Düşük, Düzeltme etkisi: Yok"
+        },
+        "kiraci": {
+          "otelCari": 0,
+          "otelAvans": 0,
+          "avmCari": 0,
+          "avmAvans": 0,
+          "acenteCari": 0,
+          "acenteAvans": 0,
+          "virmanOpportunity": 0,
+          "totalVirmanAmount": 0
+        },
+        "muhasebeModu": {
+          "score": 50,
+          "kritikRisk": [],
+          "fisSuggestions": [],
+          "status": "ACİL MUHASEBE TEMİZLİĞİ"
+        }
       },
-      "alerts": [],
+      "alerts": [
+        {
+          "type": "ok",
+          "ico": "✅",
+          "title": "MUTABIK: 181 ↔ 3010",
+          "desc": "Balans kontrolü uyumlu.",
+          "actionRequired": false
+        },
+        {
+          "type": "info",
+          "ico": "ℹ",
+          "title": "Hesap Kartları Eksik",
+          "desc": "Mizan veya hesap kartları raporu bulunamadı. 120/340/391 analizleri sınırlı.",
+          "actionRequired": false
+        }
+      ],
       "logs": [
         {
-          "time": "2026-06-30T10:34:42.894Z",
+          "time": "2026-06-30T21:14:11.186Z",
           "process": "Otomatik Klasör Taraması",
           "fileName": "02_RAPORLAR",
           "status": "Uyarı",
@@ -279,12 +544,50 @@
     "kdv10": 0,
     "kdv20": 0,
     "accommodationTax": 0,
-    "extraTotal": 0
+    "extraTotal": 0,
+    "kdvRobot": {
+      "kdv10Expected": 0,
+      "kdv10Actual": 0,
+      "kdv10Diff": 0,
+      "kdv20Expected": 0,
+      "kdv20Actual": 0,
+      "kdv20Diff": 0,
+      "accTaxExpected": 0,
+      "accTaxActual": 0,
+      "accTaxDiff": 0,
+      "status": "VERİ YOK",
+      "remarks": "3026 ve 391 hesapları raporundan veri yok."
+    },
+    "virmanRobot": {
+      "candidates": 0,
+      "totalAmount": 0,
+      "withRisk": 0,
+      "kur191Effect": 0,
+      "adj679Effect": 0,
+      "status": "MUTABIK",
+      "remarks": "Virman adayı: 0, Döviz etkisi: Düşük, Düzeltme etkisi: Yok"
+    },
+    "kiraci": {
+      "otelCari": 0,
+      "otelAvans": 0,
+      "avmCari": 0,
+      "avmAvans": 0,
+      "acenteCari": 0,
+      "acenteAvans": 0,
+      "virmanOpportunity": 0,
+      "totalVirmanAmount": 0
+    },
+    "muhasebeModu": {
+      "score": 50,
+      "kritikRisk": [],
+      "fisSuggestions": [],
+      "status": "ACİL MUHASEBE TEMİZLİĞİ"
+    }
   },
   "alerts": [],
   "logs": [
     {
-      "time": "2026-06-30T10:34:42.894Z",
+      "time": "2026-06-30T21:14:11.186Z",
       "process": "Otomatik Klasör Taraması",
       "fileName": "02_RAPORLAR",
       "status": "Uyarı",
@@ -296,7 +599,7 @@
   "automation": {
     "mode": "folder",
     "ok": true,
-    "lastBuild": "30.06.2026 10:34:42",
+    "lastBuild": "30.06.2026 21:14:11",
     "fileCount": 0,
     "reportCount": 0,
     "errorCount": 0,
