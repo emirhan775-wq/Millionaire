@@ -21,12 +21,15 @@ Bu dosya:
 --------------------
 Terminal / CMD:
 
-  npm install
+  npm install      (opsiyonel - sadece dotenv/xlsx gerekirse)
   npm start
 
 Sonra tarayıcı:
 
   http://localhost:3080
+
+NOT: Sistem Node built-in modules ile çalışır. npm install zorunlu değil.
+     Excel desteği için: npm install xlsx
 
 3) OTOMATİK RAPOR OKUMA
 -----------------------
@@ -73,21 +76,40 @@ AUTO_MODE seçenekleri:
 index.html dosyasını çift tıklayıp file:// olarak açarsan tarayıcı güvenliği nedeniyle tam otomatik klasör okuma çalışmaz.
 Tam otomatik kullanım için START_DASHBOARD.bat veya npm start ile localhost üzerinden aç.
 
-6) KONTROL EDİLEN ANA MODÜLLER
-------------------------------
-- 5 otel ayrı dashboard
+6) SAYFALAR VE MODÜLLER
+------------------------
+ANA SAYFA (Dashboard):
+- Toplam gelir, oda doluluk, ADR & RevPAR
 - 181 ↔ 3010 balans kontrolü
-- 3014 kasa/tahsilat kontrolü
-- 3035 gelir, ADR, RevPAR, doluluk
-- 3025 ekstra satış mapping
-- 3026 KDV / Konaklama Vergisi
-- 600 ↔ 391 KDV robotu
-- 360.01.01.0016 konaklama vergisi kontrolü
-- 120 ↔ 340 kiracı/acente/avans virman önerileri
-- 191 ↔ 391 KDV mahsup etkisi
-- 393 ↔ 340 devir/avans kontrolü
-- 646/656 kur farkı, 679/689 yuvarlama/düzeltme kontrolü
-- Muhasebe Modu / Komuta Merkezi
+- KDV robotu özet (anasayfada görsün)
+- Virman/Mahsup robotu özet
+- Kiracı 120/340 özet
+- Muhasebe Komuta Merkezi
+
+KONTROL SAYFALARI:
+- KDV & Konaklama Vergisi (🟨 Kon.Tax)
+  * 391.01.01.0002 (%10)
+  * 391.01.01.0003 (%20)
+  * 360.01.01.0016 (Konaklama Vergisi)
+  * CSV Export
+
+- Virman Kontrol (🔁 Virman)
+  * 120/340 virman adayları
+  * 191/391 mahsup etkisi
+  * 646/656 kur farkı
+  * 679/689 yuvarlama/düzeltme
+
+- Kiracılar (🏬 Kiracılar 120/340)
+  * 120.01.06/340.01.06 (Otel Kiracı)
+  * 120.01.07/340.01.07 (AVM Kiracı)
+  * 120.01.01/340.01.01 (Acente)
+  * Ayrı sınıflandırma ve CSV
+
+- Muhasebe Modu (🧑‍💼 Muhasebe)
+  * Denetim skoru (0-100)
+  * Kritik riskler listesi
+  * Aksiyon önerileri
+  * Denetçi raporu
 
 7) HIZLI ENDPOINTLER
 --------------------
