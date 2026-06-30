@@ -1,1 +1,1 @@
-2026-06-30T21:14:46.222Z | Uyarı | Otomatik Klasör Taraması | 02_RAPORLAR | 02_RAPORLAR klasöründe okunacak Excel/CSV/JSON raporu bulunamadı. Dashboard boş veri ile açılır; rapor atılır atılmaz watcher otomatik yeniden okur. | 0 dosya
+2026-06-30T21:15:25.642Z | Çalıştı | Dosya Okuma | ADAM_EVE/3010_balans.csv | ADAM & EVE OTEL / Raw_3010 olarak okundu. Satır: 2 | 

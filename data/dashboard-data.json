@@ -2,11 +2,11 @@
   "currentHotelId": "ADAM_EVE",
   "meta": {
     "hotel": "BEŞ OTEL MUTABAKAT",
-    "lastUpdate": "30.06.2026 21:14:46",
+    "lastUpdate": "30.06.2026 21:15:25",
     "status": "OTOMATİK KLASÖR",
     "autoMode": "folder_first",
     "watcher": true,
-    "fileCount": 0
+    "fileCount": 1
   },
   "hotels": [
     {
@@ -15,12 +15,31 @@
       "short": "A&E",
       "meta": {
         "hotel": "ADAM & EVE OTEL",
-        "lastUpdate": "30.06.2026 21:14:46",
-        "status": "MUTABIK",
+        "lastUpdate": "30.06.2026 21:15:25",
+        "status": "KRİTİK FARK",
         "source": "Node Lokal Veri Motoru"
       },
       "raw": {
-        "Raw_3010": [],
+        "Raw_3010": [
+          {
+            "__sourceFile": "ADAM_EVE/3010_balans.csv",
+            "__reportType": "Raw_3010",
+            "__hotelId": "ADAM_EVE",
+            "Tarih": "2026-06-30",
+            "Hesap": "181.01.01.0001",
+            "Aciklama": "Oda Carisi",
+            "Bakiye": "2500000"
+          },
+          {
+            "__sourceFile": "ADAM_EVE/3010_balans.csv",
+            "__reportType": "Raw_3010",
+            "__hotelId": "ADAM_EVE",
+            "Tarih": "2026-06-30",
+            "Hesap": "3010",
+            "Aciklama": "TOTAL BALANCE",
+            "Bakiye": "2500050"
+          }
+        ],
         "Raw_3014": [],
         "Raw_3025": [],
         "Raw_3026": [],
@@ -37,9 +56,9 @@
         "otherRevenue": 0,
         "cashTotal": 0,
         "balance181": 0,
-        "balance3010": 0,
-        "balanceDiff": 0,
-        "balanceStatus": "MUTABIK",
+        "balance3010": 2500050,
+        "balanceDiff": -2500050,
+        "balanceStatus": "KRİTİK FARK",
         "kdv10": 0,
         "kdv20": 0,
         "accommodationTax": 0,
@@ -77,19 +96,19 @@
           "totalVirmanAmount": 0
         },
         "muhasebeModu": {
-          "score": 50,
+          "score": 55,
           "kritikRisk": [],
           "fisSuggestions": [],
-          "status": "ACİL MUHASEBE TEMİZLİĞİ"
+          "status": "GELİŞTİRİLECEK ALAN VAR"
         }
       },
       "alerts": [
         {
-          "type": "ok",
-          "ico": "✅",
-          "title": "MUTABIK: 181 ↔ 3010",
-          "desc": "Balans kontrolü uyumlu.",
-          "actionRequired": false
+          "type": "err",
+          "ico": "🔴",
+          "title": "KRİTİK FARK: 181 ↔ 3010",
+          "desc": "₺2.500.050 fark bulundu. Rapor kesit saati, ön büro kapanışı, tahakkuk veya manuel muhasebe kaydı kontrol et.",
+          "actionRequired": true
         },
         {
           "type": "info",
@@ -101,13 +120,13 @@
       ],
       "logs": [
         {
-          "time": "2026-06-30T21:14:46.222Z",
-          "process": "Otomatik Klasör Taraması",
-          "fileName": "02_RAPORLAR",
-          "status": "Uyarı",
-          "desc": "02_RAPORLAR klasöründe okunacak Excel/CSV/JSON raporu bulunamadı. Dashboard boş veri ile açılır; rapor atılır atılmaz watcher otomatik yeniden okur.",
-          "errorMsg": "0 dosya",
-          "actionRequired": true
+          "time": "2026-06-30T21:15:25.642Z",
+          "process": "Dosya Okuma",
+          "fileName": "ADAM_EVE/3010_balans.csv",
+          "status": "Çalıştı",
+          "desc": "ADAM & EVE OTEL / Raw_3010 olarak okundu. Satır: 2",
+          "errorMsg": "",
+          "actionRequired": false
         }
       ]
     },
@@ -117,7 +136,7 @@
       "short": "SEG",
       "meta": {
         "hotel": "SEGINUS OTEL",
-        "lastUpdate": "30.06.2026 21:14:46",
+        "lastUpdate": "30.06.2026 21:15:25",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -201,17 +220,7 @@
           "actionRequired": false
         }
       ],
-      "logs": [
-        {
-          "time": "2026-06-30T21:14:46.222Z",
-          "process": "Otomatik Klasör Taraması",
-          "fileName": "02_RAPORLAR",
-          "status": "Uyarı",
-          "desc": "02_RAPORLAR klasöründe okunacak Excel/CSV/JSON raporu bulunamadı. Dashboard boş veri ile açılır; rapor atılır atılmaz watcher otomatik yeniden okur.",
-          "errorMsg": "0 dosya",
-          "actionRequired": true
-        }
-      ]
+      "logs": []
     },
     {
       "id": "ALHAMBRA",
@@ -219,7 +228,7 @@
       "short": "ALH",
       "meta": {
         "hotel": "ALHAMBRA OTEL",
-        "lastUpdate": "30.06.2026 21:14:46",
+        "lastUpdate": "30.06.2026 21:15:25",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -303,17 +312,7 @@
           "actionRequired": false
         }
       ],
-      "logs": [
-        {
-          "time": "2026-06-30T21:14:46.222Z",
-          "process": "Otomatik Klasör Taraması",
-          "fileName": "02_RAPORLAR",
-          "status": "Uyarı",
-          "desc": "02_RAPORLAR klasöründe okunacak Excel/CSV/JSON raporu bulunamadı. Dashboard boş veri ile açılır; rapor atılır atılmaz watcher otomatik yeniden okur.",
-          "errorMsg": "0 dosya",
-          "actionRequired": true
-        }
-      ]
+      "logs": []
     },
     {
       "id": "HOLIDAY",
@@ -321,7 +320,7 @@
       "short": "HOL",
       "meta": {
         "hotel": "HOLIDAY OTEL",
-        "lastUpdate": "30.06.2026 21:14:46",
+        "lastUpdate": "30.06.2026 21:15:25",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -405,17 +404,7 @@
           "actionRequired": false
         }
       ],
-      "logs": [
-        {
-          "time": "2026-06-30T21:14:46.222Z",
-          "process": "Otomatik Klasör Taraması",
-          "fileName": "02_RAPORLAR",
-          "status": "Uyarı",
-          "desc": "02_RAPORLAR klasöründe okunacak Excel/CSV/JSON raporu bulunamadı. Dashboard boş veri ile açılır; rapor atılır atılmaz watcher otomatik yeniden okur.",
-          "errorMsg": "0 dosya",
-          "actionRequired": true
-        }
-      ]
+      "logs": []
     },
     {
       "id": "DRAGON",
@@ -423,7 +412,7 @@
       "short": "DRG",
       "meta": {
         "hotel": "DRAGON OTEL",
-        "lastUpdate": "30.06.2026 21:14:46",
+        "lastUpdate": "30.06.2026 21:15:25",
         "status": "MUTABIK",
         "source": "Node Lokal Veri Motoru"
       },
@@ -507,21 +496,30 @@
           "actionRequired": false
         }
       ],
-      "logs": [
-        {
-          "time": "2026-06-30T21:14:46.222Z",
-          "process": "Otomatik Klasör Taraması",
-          "fileName": "02_RAPORLAR",
-          "status": "Uyarı",
-          "desc": "02_RAPORLAR klasöründe okunacak Excel/CSV/JSON raporu bulunamadı. Dashboard boş veri ile açılır; rapor atılır atılmaz watcher otomatik yeniden okur.",
-          "errorMsg": "0 dosya",
-          "actionRequired": true
-        }
-      ]
+      "logs": []
     }
   ],
   "raw": {
-    "Raw_3010": [],
+    "Raw_3010": [
+      {
+        "__sourceFile": "ADAM_EVE/3010_balans.csv",
+        "__reportType": "Raw_3010",
+        "__hotelId": "ADAM_EVE",
+        "Tarih": "2026-06-30",
+        "Hesap": "181.01.01.0001",
+        "Aciklama": "Oda Carisi",
+        "Bakiye": "2500000"
+      },
+      {
+        "__sourceFile": "ADAM_EVE/3010_balans.csv",
+        "__reportType": "Raw_3010",
+        "__hotelId": "ADAM_EVE",
+        "Tarih": "2026-06-30",
+        "Hesap": "3010",
+        "Aciklama": "TOTAL BALANCE",
+        "Bakiye": "2500050"
+      }
+    ],
     "Raw_3014": [],
     "Raw_3025": [],
     "Raw_3026": [],
@@ -538,9 +536,9 @@
     "otherRevenue": 0,
     "cashTotal": 0,
     "balance181": 0,
-    "balance3010": 0,
-    "balanceDiff": 0,
-    "balanceStatus": "MUTABIK",
+    "balance3010": 2500050,
+    "balanceDiff": -2500050,
+    "balanceStatus": "KRİTİK FARK",
     "kdv10": 0,
     "kdv20": 0,
     "accommodationTax": 0,
@@ -578,32 +576,32 @@
       "totalVirmanAmount": 0
     },
     "muhasebeModu": {
-      "score": 50,
+      "score": 55,
       "kritikRisk": [],
       "fisSuggestions": [],
-      "status": "ACİL MUHASEBE TEMİZLİĞİ"
+      "status": "GELİŞTİRİLECEK ALAN VAR"
     }
   },
   "alerts": [],
   "logs": [
     {
-      "time": "2026-06-30T21:14:46.222Z",
-      "process": "Otomatik Klasör Taraması",
-      "fileName": "02_RAPORLAR",
-      "status": "Uyarı",
-      "desc": "02_RAPORLAR klasöründe okunacak Excel/CSV/JSON raporu bulunamadı. Dashboard boş veri ile açılır; rapor atılır atılmaz watcher otomatik yeniden okur.",
-      "errorMsg": "0 dosya",
-      "actionRequired": true
+      "time": "2026-06-30T21:15:25.642Z",
+      "process": "Dosya Okuma",
+      "fileName": "ADAM_EVE/3010_balans.csv",
+      "status": "Çalıştı",
+      "desc": "ADAM & EVE OTEL / Raw_3010 olarak okundu. Satır: 2",
+      "errorMsg": "",
+      "actionRequired": false
     }
   ],
   "automation": {
     "mode": "folder",
     "ok": true,
-    "lastBuild": "30.06.2026 21:14:46",
-    "fileCount": 0,
-    "reportCount": 0,
+    "lastBuild": "30.06.2026 21:15:25",
+    "fileCount": 1,
+    "reportCount": 2,
     "errorCount": 0,
-    "message": "Rapor klasörü boş; dosya bekleniyor.",
+    "message": "1 dosya otomatik okundu.",
     "busy": false
   }
 }
