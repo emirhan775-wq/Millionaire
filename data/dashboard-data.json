@@ -1,0 +1,247 @@
+{
+  "meta": {
+    "hotel": "ADAM & EVE OTEL",
+    "lastUpdate": "2026-06-30 20:45",
+    "status": "ORTA FARK",
+    "uploadedFiles": []
+  },
+  "raw": {
+    "Raw_3010": [
+      {
+        "TARIH": "01/06/2026",
+        "PARA_BIRIMI": "TL",
+        "KREDI_KARTI": 280000,
+        "NAKIT": 42600,
+        "DIGER": 150646,
+        "TOPLAM": 473246
+      }
+    ],
+    "Raw_3014": [
+      {
+        "PARA_BIRIMI": "TL",
+        "KREDI_KARTI_TL": 280000,
+        "NAKIT_TL": 42600,
+        "BAKIYE": 322600
+      },
+      {
+        "PARA_BIRIMI": "EUR",
+        "KREDI_KARTI_EUR": 8420,
+        "KURU": 33.88,
+        "TL_DEGERI": 285036
+      },
+      {
+        "PARA_BIRIMI": "USD",
+        "KREDI_KARTI_USD": 2860,
+        "KURU": 33.15,
+        "TL_DEGERI": 94769
+      }
+    ],
+    "Raw_3025": [
+      {
+        "URUN_GRUBU": "Restaurant",
+        "HESAP_KODU": "600.01.02.0001",
+        "GELIR": 64602,
+        "KDV_ORANI": "10"
+      },
+      {
+        "URUN_GRUBU": "Bar/İçecek",
+        "HESAP_KODU": "600.01.02.0003",
+        "GELIR": 32036,
+        "KDV_ORANI": "20"
+      },
+      {
+        "URUN_GRUBU": "Diğer Servis",
+        "HESAP_KODU": "600.01.03.0001",
+        "GELIR": 10323,
+        "KDV_ORANI": "20"
+      }
+    ],
+    "Raw_3026": [
+      {
+        "REVENUE_TURU": "Oda Geliri",
+        "MATRAH": 845200,
+        "KDV_ORANI": "10",
+        "KDV_TUTARI": 84520,
+        "BRUT": 929720
+      },
+      {
+        "REVENUE_TURU": "Yiyecek Geliri",
+        "MATRAH": 262000,
+        "KDV_ORANI": "10",
+        "KDV_TUTARI": 26200,
+        "BRUT": 288200
+      },
+      {
+        "REVENUE_TURU": "Alkollü İçecek",
+        "MATRAH": 98000,
+        "KDV_ORANI": "20",
+        "KDV_TUTARI": 19600,
+        "BRUT": 117600
+      },
+      {
+        "REVENUE_TURU": "Diğer Gelirler",
+        "MATRAH": 80000,
+        "KDV_ORANI": "20",
+        "KDV_TUTARI": 16000,
+        "BRUT": 96000
+      },
+      {
+        "REVENUE_TURU": "Mini Bar",
+        "MATRAH": 32000,
+        "KDV_ORANI": "20",
+        "KDV_TUTARI": 6400,
+        "BRUT": 38400
+      }
+    ],
+    "Raw_3035": [
+      {
+        "TARIH": "01/06/2026",
+        "TOPLAM_GELIR": 2788958,
+        "ODA_GELIRI": 2682232,
+        "FB_GELIRI": 74688,
+        "DIGER_GELIR": 32036,
+        "DOLU_ODA": 148,
+        "TOPLAM_ODA": 544,
+        "ADR": 18123,
+        "KISI_SAYISI": 301
+      }
+    ],
+    "Raw_3000": [],
+    "Raw_181": [
+      {
+        "HESAP_KODU": "181.01.01.0001",
+        "HESAP_ADI": "Kasa Bakiye",
+        "BORÇ": 0,
+        "ALACAK": 6359035.78,
+        "BAKIYE": 6359035.78
+      }
+    ],
+    "Raw_HesapKartlari": [
+      {
+        "HESAP_KODU": "360.01.01.0016",
+        "HESAP_ADI": "Konaklama Vergisi",
+        "BAKIYE": 0,
+        "PARA_BIRIMI": "TL"
+      },
+      {
+        "HESAP_KODU": "391.01.01.0002",
+        "HESAP_ADI": "KDV %10",
+        "BAKIYE": 110720,
+        "PARA_BIRIMI": "TL"
+      },
+      {
+        "HESAP_KODU": "391.01.01.0003",
+        "HESAP_ADI": "KDV %20",
+        "BAKIYE": 35600,
+        "PARA_BIRIMI": "TL"
+      },
+      {
+        "HESAP_KODU": "600.01.01.0001",
+        "HESAP_ADI": "Oda Geliri %10",
+        "BAKIYE": 929720,
+        "PARA_BIRIMI": "TL"
+      },
+      {
+        "HESAP_KODU": "600.01.02.0001",
+        "HESAP_ADI": "Yiyecek Geliri",
+        "BAKIYE": 288200,
+        "PARA_BIRIMI": "TL"
+      }
+    ],
+    "Raw_Muhasebe": [
+      {
+        "TARIH": "01/06/2026",
+        "SAYFA": "MUHASEBE_HAREKETLERI",
+        "HESAP": "100",
+        "ACIKLAMA": "Kasa",
+        "TUTAR": 473246
+      }
+    ]
+  },
+  "summary": {
+    "totalRevenue": 2788958,
+    "roomRevenue": 2682232,
+    "fbRevenue": 74688,
+    "otherRevenue": 32036,
+    "occupancy": 27,
+    "occupiedRooms": 148,
+    "totalRooms": 544,
+    "adr": 18123,
+    "revpar": 4890,
+    "mtdRevenue": 106981497,
+    "ytdRevenue": 114919766,
+    "mtdOccupancy": 41.6,
+    "cashTotal": 473246,
+    "balance181": 6359035.78,
+    "balance3010": 6359518.05,
+    "balanceDiff": -482.27,
+    "balanceStatus": "warn",
+    "kdv10": 110720,
+    "kdv20": 35600,
+    "accommodationTax": 0,
+    "lastUpdate": "2026-06-30 20:45",
+    "dataLoaded": true
+  },
+  "alerts": [
+    {
+      "type": "warn",
+      "ico": "⚡",
+      "title": "181 ↔ 3010 Balans Farkı: ₺482,27 (ORTA FARK)",
+      "desc": "[RN005/RN012] Rapor farklı tarih/saatte alınmış olabilir. Guest ledger devri, previous balance veya tahakkuk kapanışı muhasebeye tam aktarılmamış."
+    },
+    {
+      "type": "amber",
+      "ico": "⚠",
+      "title": "3025 Extra Posting — Mapping Eksik Kalem",
+      "desc": "[RN007] Ekstra satış raporunda 'Diğer' kategorisi doğru hesap koduna eşleşmemiş. MAP_URUN_ACIKLAMA tablosunu güncelle."
+    },
+    {
+      "type": "green",
+      "ico": "✅",
+      "title": "KDV Mutabakatı — 4/4 Kayıt Uyumlu",
+      "desc": "[KDV001-KDV004] 3026 KDV %10 ve %20 tutarları ile 391 hesapları tam eşleşiyor. Fark: ₺0."
+    }
+  ],
+  "logs": [
+    {
+      "timestamp": "2026-06-30 20:45:22",
+      "report": "3010",
+      "action": "OKUMA",
+      "detail": "balance",
+      "status": "ok",
+      "message": "3010 Kasa Raporu başarıyla okundu"
+    },
+    {
+      "timestamp": "2026-06-30 20:44:15",
+      "report": "3035",
+      "action": "OKUMA",
+      "detail": "revenue",
+      "status": "ok",
+      "message": "3035 Revenue Raporu başarıyla okundu"
+    },
+    {
+      "timestamp": "2026-06-30 20:43:08",
+      "report": "181",
+      "action": "KONTROL",
+      "detail": "balance",
+      "status": "warn",
+      "message": "181.01.01.0001 ve 3010 arasında fark tespit edildi: ₺482,27"
+    },
+    {
+      "timestamp": "2026-06-30 20:42:00",
+      "report": "3026",
+      "action": "OKUMA",
+      "detail": "kdv-kontrol",
+      "status": "ok",
+      "message": "3026 KDV Kontrol başarıyla tamamlandı"
+    },
+    {
+      "timestamp": "2026-06-30 20:41:10",
+      "report": "3025",
+      "action": "OKUMA",
+      "detail": "extra-posting",
+      "status": "ok",
+      "message": "3025 Ekstra Satış Raporu okundu"
+    }
+  ]
+}

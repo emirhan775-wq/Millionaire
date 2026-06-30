@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERP Mutabakat Sistemi | Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --sidebar:#1e1b4b;
+      --sidebar2:#16134a;
+      --purple:#6366f1;
+      --purple-dark:#4f46e5;
+      --sky:#38bdf8;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --red:#ef4444;
+      --orange:#f97316;
+      --teal:#14b8a6;
+      --pink:#ec4899;
+      --indigo:#6366f1;
+      --blue:#3b82f6;
+      --violet:#a855f7;
+      --bg:#f1f5f9;
+      --card:#ffffff;
+      --border:#e2e8f0;
+      --text:#0f172a;
+      --muted:#64748b;
+      --mono:'JetBrains Mono',monospace;
+    }
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;font-size:13px}
+    /* ─── SIDEBAR ─── */
+    .sb{width:196px;min-width:196px;background:var(--sidebar);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:200;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent}
+    .sb-logo{padding:16px 14px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .sb-brand{display:flex;align-items:center;gap:9px}
+    .sb-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+    .sb-name{font-size:13px;font-weight:800;color:#fff;line-height:1.2}
+    .sb-sub{font-size:9px;color:rgba(255,255,255,.45);font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+    .sb-section{padding:12px 14px 4px;font-size:9px;font-weight:600;letter-spacing:.12em;color:rgba(255,255,255,.3);text-transform:uppercase}
+    .sb-item{display:flex;align-items:center;gap:9px;padding:7px 14px;color:rgba(255,255,255,.55);font-size:12px;font-weight:500;cursor:pointer;border-left:3px solid transparent;transition:all .12s;text-decoration:none}
+    .sb-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9)}
+    .sb-item.active{background:rgba(99,102,241,.2);color:#fff;border-left-color:var(--sky);font-weight:700}
+    .sb-item .ico{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+    .sb-badge{background:var(--red);color:#fff;border-radius:10px;font-size:9px;padding:1px 6px;font-weight:700;margin-left:auto}
+    .sb-badge.amber{background:var(--amber)}
+    .sb-badge.green{background:var(--green)}
+
+    /* ─── TOPBAR ─── */
+    .topbar{position:fixed;top:0;left:196px;right:0;height:50px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    .tb-search{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text);font-size:12px;font-family:inherit;width:200px;outline:none}
+    .tb-search:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+    .tb-crumb{flex:1;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+    .tb-crumb .curr{color:var(--text);font-weight:700}
+    .tb-right{display:flex;align-items:center;gap:8px}
+    .tb-btn{width:32px;height:32px;background:#f8fafc;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s}
+    .tb-btn:hover{background:var(--purple);border-color:var(--purple);color:#fff}
+    .tb-avatar{width:32px;height:32px;background:var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer}
+
+    /* ─── MAIN ─── */
+    .main{margin-left:196px;margin-top:50px;padding:18px 20px;flex:1}
+    .page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .page-title{font-size:18px;font-weight:800;color:var(--text)}
+    .page-meta{display:flex;align-items:center;gap:8px}
+    .date-chip{background:var(--sidebar);color:#fff;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;font-family:var(--mono);display:flex;align-items:center;gap:7px}
+    .status-chip{padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px}
+    .status-chip.ok{background:rgba(34,197,94,.12);color:#16a34a;border:1px solid rgba(34,197,94,.2)}
+    .status-chip.warn{background:rgba(245,158,11,.12);color:#d97706;border:1px solid rgba(245,158,11,.2)}
+    .status-chip.err{background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.2)}
+
+    /* ─── GRID ─── */
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+
+    /* ─── CARD ─── */
+    .card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.04);animation:fadeUp .35s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .card:nth-child(1){animation-delay:.04s}.card:nth-child(2){animation-delay:.07s}.card:nth-child(3){animation-delay:.10s}
+    .card:nth-child(4){animation-delay:.13s}.card:nth-child(5){animation-delay:.16s}.card:nth-child(6){animation-delay:.19s}
+    .card:nth-child(7){animation-delay:.22s}.card:nth-child(8){animation-delay:.25s}.card:nth-child(9){animation-delay:.28s}
+    .card:nth-child(10){animation-delay:.31s}.card:nth-child(11){animation-delay:.34s}.card:nth-child(12){animation-delay:.37s}
+
+    .card-head{display:flex;align-items:center;gap:7px;margin-bottom:12px}
+    .card-ico{font-size:16px;flex-shrink:0}
+    .card-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+    .card-label b{color:var(--text)}
+    .card-actions{margin-left:auto;display:flex;gap:4px}
+    .card-act-btn{background:#f8fafc;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:10px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .1s}
+    .card-act-btn:hover{background:var(--purple);border-color:var(--purple);color:#fff}
+
+    /* ─── KPI CARDS ─── */
+    .kpi-val{font-family:var(--mono);font-size:24px;font-weight:700;line-height:1;margin-bottom:3px}
+    .kpi-sub{font-size:11px;color:var(--muted);margin-top:2px}
+    .kpi-row{display:flex;align-items:flex-end;justify-content:space-between}
+    .trend{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px}
+    .trend.up{background:rgba(34,197,94,.1);color:#16a34a}
+    .trend.down{background:rgba(239,68,68,.1);color:#dc2626}
+    .trend.neutral{background:rgba(245,158,11,.1);color:#d97706}
+
+    /* Card color variants */
+    .card.sky{background:linear-gradient(135deg,#0284c7 0%,#0ea5e9 100%);border:none;color:#fff}
+    .card.sky .card-label,.card.sky .kpi-sub{color:rgba(255,255,255,.7)}
+    .card.sky .kpi-val{color:#fff}
+    .card.orange{background:linear-gradient(135deg,#ea580c 0%,#f97316 100%);border:none;color:#fff}
+    .card.orange .card-label,.card.orange .kpi-sub{color:rgba(255,255,255,.7)}
+    .card.orange .kpi-val{color:#fff}
+    .card.teal{background:linear-gradient(135deg,#0d9488 0%,#14b8a6 100%);border:none;color:#fff}
+    .card.teal .card-label,.card.teal .kpi-sub{color:rgba(255,255,255,.7)}
+    .card.teal .kpi-val{color:#fff}
+
+    /* Donut */
+    .donut-wrap{display:flex;align-items:center;gap:12px;margin-top:6px}
+    .donut-svg{flex-shrink:0;position:relative}
+    .donut-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;font-weight:700;color:#fff}
+
+    /* Mini bar chart */
+    .mini-bars{display:flex;align-items:flex-end;gap:2px;height:34px;margin-top:10px}
+    .mini-bar{flex:1;border-radius:2px 2px 0 0;min-height:4px;transition:opacity .2s}
+    .mini-bar:hover{opacity:.7}
+
+    /* ─── TABLE ─── */
+    .tbl{width:100%;border-collapse:collapse;font-size:11px}
+    .tbl th{text-align:left;color:var(--muted);font-weight:600;padding:4px 6px;font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--border)}
+    .tbl td{padding:5px 6px;border-bottom:1px solid rgba(226,232,240,.6);color:var(--text);font-family:var(--mono);font-size:11px;vertical-align:middle}
+    .tbl tr:last-child td{border-bottom:none}
+    .tbl tr:hover td{background:rgba(99,102,241,.03)}
+    .tbl .pos{color:#16a34a;font-weight:600}
+    .tbl .neg{color:#dc2626;font-weight:600}
+    .tbl .warn{color:#d97706;font-weight:600}
+    .tbl .muted{color:var(--muted);font-size:10px;font-family:'Inter',sans-serif}
+
+    /* Status pills */
+    .pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap;font-family:'Inter',sans-serif}
+    .pill.ok{background:rgba(34,197,94,.1);color:#16a34a}
+    .pill.warn{background:rgba(245,158,11,.1);color:#d97706}
+    .pill.err{background:rgba(239,68,68,.1);color:#dc2626}
+    .pill.info{background:rgba(59,130,246,.1);color:#2563eb}
+    .pill.neutral{background:rgba(100,116,139,.1);color:#64748b}
+
+    /* Dot */
+    .dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0}
+    .dot.green{background:#22c55e}.dot.red{background:#ef4444}.dot.amber{background:#f59e0b}.dot.blue{background:#3b82f6}.dot.violet{background:#a855f7}
+
+    /* ─── KASA ITEMS ─── */
+    .kasa-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(226,232,240,.6)}
+    .kasa-row:last-child{border-bottom:none}
+    .kasa-left{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:11px}
+    .kasa-right{font-family:var(--mono);font-weight:700;font-size:12px;color:var(--text)}
+    .kasa-total-bar{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-weight:700;font-size:11px}
+    .kasa-total-val{font-family:var(--mono);font-size:17px;font-weight:800;color:var(--purple)}
+
+    /* ─── ALERT ITEMS ─── */
+    .alert-row{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;margin-bottom:5px;border-left:3px solid}
+    .alert-row.red{background:rgba(239,68,68,.05);border-color:#ef4444}
+    .alert-row.amber{background:rgba(245,158,11,.05);border-color:#f59e0b}
+    .alert-row.blue{background:rgba(59,130,246,.05);border-color:#3b82f6}
+    .alert-row.green{background:rgba(34,197,94,.05);border-color:#22c55e}
+    .alert-ico{font-size:18px;flex-shrink:0;line-height:1.2}
+    .alert-title{font-weight:700;font-size:11.5px;margin-bottom:2px;color:var(--text)}
+    .alert-desc{font-size:10.5px;color:var(--muted);line-height:1.55}
+
+    /* ─── NOTES ─── */
+    .note-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid rgba(226,232,240,.5);font-size:11px;line-height:1.55}
+    .note-row:last-child{border-bottom:none}
+    .note-ico{font-size:14px;flex-shrink:0;margin-top:1px}
+    .note-text{color:var(--text)}
+    .note-text em{color:var(--purple);font-style:normal;font-weight:700}
+
+    /* ─── KDV ─── */
+    .kdv-pill{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:8px;margin-bottom:5px}
+    .kdv-pill:last-child{margin-bottom:0}
+    .kdv-lbl{font-size:10.5px;font-weight:600;color:var(--muted)}
+    .kdv-val{font-family:var(--mono);font-weight:800;font-size:13px;color:var(--text)}
+
+    /* ─── BALANS ─── */
+    .bal-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(226,232,240,.4);font-size:11px}
+    .bal-row:last-child{border-bottom:none}
+    .bal-lbl{color:var(--muted);font-size:10.5px}
+    .bal-val{font-family:var(--mono);font-weight:700;font-size:12px}
+    .bal-sum{padding:8px 12px;border-radius:8px;display:flex;align-items:center;gap:7px;font-weight:700;font-size:11.5px;margin-top:8px}
+    .bal-sum.ok{background:rgba(34,197,94,.1);color:#16a34a}
+    .bal-sum.warn{background:rgba(245,158,11,.1);color:#d97706}
+    .bal-sum.err{background:rgba(239,68,68,.1);color:#dc2626}
+
+    /* ─── LINKS ─── */
+    .links-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .link-chip{display:flex;align-items:center;gap:7px;background:#f8fafc;border:1px solid var(--border);border-radius:9px;padding:8px 14px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text);transition:all .12s;text-decoration:none}
+    .link-chip:hover{background:var(--sidebar);border-color:var(--sidebar);color:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(30,27,75,.2)}
+
+    /* ─── DIVIDER ─── */
+    .divider{grid-column:span 12;display:flex;align-items:center;gap:10px;padding:2px 0}
+    .divider span{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);white-space:nowrap}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* ─── SCROLLBOX ─── */
+    .scrollbox{max-height:150px;overflow-y:auto}
+    .scrollbox::-webkit-scrollbar{width:3px}
+    .scrollbox::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+    /* ─── PROGRESS ─── */
+    .prog-wrap{margin-top:8px}
+    .prog-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:3px}
+    .prog-bar{height:5px;background:#f1f5f9;border-radius:3px;overflow:hidden}
+    .prog-fill{height:100%;border-radius:3px;transition:width .6s ease}
+
+    /* ─── CALENDAR ─── */
+    .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .cal-month{font-size:12px;font-weight:800;color:var(--sidebar)}
+    .cal-nav{background:none;border:1px solid var(--border);cursor:pointer;color:var(--muted);font-size:13px;padding:2px 7px;border-radius:6px;transition:all .1s}
+    .cal-nav:hover{background:var(--sidebar);border-color:var(--sidebar);color:#fff}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}
+    .cal-dlbl{font-size:9px;font-weight:700;color:var(--muted);text-align:center;padding:3px 0;text-transform:uppercase}
+    .cal-day{font-size:10.5px;text-align:center;padding:4px 1px;border-radius:5px;cursor:pointer;color:var(--text);font-family:var(--mono);transition:background .1s}
+    .cal-day:hover{background:#f1f5f9}
+    .cal-day.other{color:#cbd5e1}
+    .cal-day.today{background:var(--purple);color:#fff;font-weight:800;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+    .cal-day.has-ev::after{content:'';display:block;width:3px;height:3px;background:var(--orange);border-radius:50%;margin:1px auto 0}
+
+    /* ─── PULSE ─── */
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .pulse{animation:pulse 1.8s infinite}
+  </style>
+</head>
+<body>
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sb">
+    <div class="sb-logo">
+      <div class="sb-brand">
+        <div class="sb-icon" style="background:#4f46e5">🏨</div>
+        <div>
+          <div class="sb-name">ERP Mutabakat</div>
+          <div class="sb-sub">ADAM & EVE OTEL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sb-section">Ana Menü</div>
+    <a class="sb-item active" data-page="dashboard" onclick="navigateTo('dashboard')"><span class="ico">🏠</span>Dashboard</a>
+    <a class="sb-item" data-page="auto-control" onclick="navigateTo('auto-control')"><span class="ico">🤖</span>Otomatik Kontrol<span class="sb-badge green">Aktif</span></a>
+    <a class="sb-item" data-page="upload" onclick="navigateTo('upload')"><span class="ico">📥</span>Veri Yükleme</a>
+
+    <div class="sb-section">Finans Kontrol</div>
+    <a class="sb-item" data-page="balance-181-3010" onclick="navigateTo('balance-181-3010')"><span class="ico">⚖</span>181 ↔ 3010</a>
+    <a class="sb-item" data-page="mizan" onclick="navigateTo('mizan')"><span class="ico">🧮</span>Mizan Kontrol</a>
+    <a class="sb-item" data-page="kdv-tax" onclick="navigateTo('kdv-tax')"><span class="ico">🟨</span>3026 Kon.Tax</a>
+    <a class="sb-item" data-page="difference-analysis" onclick="navigateTo('difference-analysis')"><span class="ico">📊</span>Fark Analizi</a>
+    <a class="sb-item" data-page="alerts" onclick="navigateTo('alerts')"><span class="ico">🚨</span>Uyarı Listesi<span class="sb-badge">2</span></a>
+
+    <div class="sb-section">Raporlar</div>
+    <a class="sb-item" data-page="exchange-rates" onclick="navigateTo('exchange-rates')"><span class="ico">💱</span>Güncel Kurlar</a>
+    <a class="sb-item" data-page="extra-sales" onclick="navigateTo('extra-sales')"><span class="ico">🛒</span>Ekstra Satış</a>
+    <a class="sb-item" data-page="reason-engine" onclick="navigateTo('reason-engine')"><span class="ico">🧠</span>Neden Motoru</a>
+    <a class="sb-item" data-page="log" onclick="navigateTo('log')"><span class="ico">📜</span>Log</a>
+
+    <div class="sb-section">Sistem</div>
+    <a class="sb-item" data-page="settings" onclick="navigateTo('settings')"><span class="ico">🛠</span>Otomatik Ayarlar</a>
+    <a class="sb-item" data-page="main-menu" onclick="navigateTo('main-menu')"><span class="ico">📌</span>Ana Menü</a>
+  </aside>
+
+  <!-- ═══ TOPBAR ═══ -->
+  <header class="topbar">
+    <input class="tb-search" type="text" placeholder="🔍  Rapor veya hesap ara...">
+    <div class="tb-crumb">
+      <span>ERP Mutabakat</span><span>›</span><span class="curr">Dashboard</span>
+    </div>
+    <div class="tb-right">
+      <button class="tb-btn" onclick="location.reload()" title="Yenile">↻</button>
+      <button class="tb-btn" onclick="navigateTo('log')" title="Log">📜</button>
+      <button class="tb-btn" onclick="navigateTo('alerts')" title="Bildirimler">🔔</button>
+      <div class="tb-avatar">A</div>
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main class="main">
+
+    <div class="page-hdr">
+      <div>
+        <div class="page-title">ERP Mutabakat Sistemi — Günlük Kontrol Paneli</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">3035 Rapor: 01/06/2026 08:50 · Son Güncelleme: <span id="lastupd"></span></div>
+      </div>
+      <div class="page-meta">
+        <div class="status-chip warn pulse">⚡ ORTA FARK — 181↔3010: ₺482,27</div>
+        <div class="date-chip">📅 <span id="datechip">—</span></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- ① TOPLAM GELİR (3035 gerçek veri) -->
+      <div class="card sky" style="grid-column:span 3">
+        <div class="card-head">
+          <span class="card-ico">💰</span>
+          <div class="card-label">① Toplam Gelir<br><b>3035 Revenue</b></div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi-val">₺2.788.958</div>
+          <span class="trend up" style="background:rgba(255,255,255,.2);color:#fff">▲ MTD</span>
+        </div>
+        <div class="kpi-sub">Oda: ₺2.682.232 · F&B: ₺74.688 · Diğer: ₺32.036</div>
+        <div class="mini-bars" id="revBar"></div>
+        <div style="margin-top:6px;font-size:10px;color:rgba(255,255,255,.6)">MTD: ₺106.981.497 · YTD: ₺114.919.766</div>
+      </div>
+
+      <!-- ② ODA DOLULUK (3035 gerçek veri) -->
+      <div class="card orange" style="grid-column:span 3">
+        <div class="card-head">
+          <span class="card-ico">🛏</span>
+          <div class="card-label">② Oda Doluluk<br><b>3035 Occupancy</b></div>
+        </div>
+        <div class="donut-wrap">
+          <div class="donut-svg" style="position:relative;width:58px;height:58px">
+            <svg width="58" height="58" viewBox="0 0 58 58" style="transform:rotate(-90deg)">
+              <circle cx="29" cy="29" r="23" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="7"/>
+              <circle cx="29" cy="29" r="23" fill="none" stroke="#fff" stroke-width="7"
+                stroke-dasharray="38.5 144.5" stroke-linecap="round"/>
+            </svg>
+            <div class="donut-pct" style="font-size:13px">27%</div>
+          </div>
+          <div>
+            <div class="kpi-val" style="font-size:20px">148 / 544</div>
+            <div class="kpi-sub">Dolu / Toplam Oda · OOO: 3</div>
+            <div style="margin-top:5px;font-size:10.5px;color:rgba(255,255,255,.75)">ADR: <strong style="color:#fff">₺18.123</strong> · Kişi: 301</div>
+            <div style="font-size:10.5px;color:rgba(255,255,255,.75)">MTD Doluluk: <strong style="color:#fff">%41,6</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ ADR (3035 gerçek veri) -->
+      <div class="card teal" style="grid-column:span 3">
+        <div class="card-head">
+          <span class="card-ico">📈</span>
+          <div class="card-label">③ ADR & RevPAR<br><b>Ort. Oda Geliri</b></div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi-val">₺18.123</div>
+          <span class="trend up" style="background:rgba(255,255,255,.2);color:#fff">▲ MTD+23%</span>
+        </div>
+        <div class="kpi-sub">Kişi başı: ₺8.911 · Matrah: ₺16.327</div>
+        <div class="mini-bars" id="adrBar"></div>
+        <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:10px;color:rgba(255,255,255,.6)">
+          <div>MTD ADR: ₺14.725</div>
+          <div>YTD ADR: ₺14.499</div>
+          <div>Varış: 21 oda</div>
+          <div>Çıkış: 150 oda</div>
+        </div>
+      </div>
+
+      <!-- ⑨ DİNAMİK TAKVİM -->
+      <div class="card" style="grid-column:span 3">
+        <div class="card-head">
+          <span class="card-ico">📅</span>
+          <div class="card-label">⑨ Dinamik Takvim</div>
+        </div>
+        <div class="cal-head">
+          <button class="cal-nav" onclick="chMonth(-1)">‹</button>
+          <div class="cal-month" id="calLbl"></div>
+          <button class="cal-nav" onclick="chMonth(1)">›</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div style="margin-top:8px;font-size:10px;color:var(--muted);display:flex;align-items:center;gap:5px">
+          <span style="width:7px;height:7px;background:var(--purple);border-radius:50%;display:inline-block"></span>Bugün
+          <span style="width:7px;height:7px;background:var(--orange);border-radius:50%;display:inline-block;margin-left:6px"></span>Rapor
+        </div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="divider"><span>📊 Mizan & Gelir Kontrolleri</span></div>
+
+      <!-- ④ MİZAN & 3026 AYLIK GELİRLER -->
+      <div class="card" style="grid-column:span 6">
+        <div class="card-head">
+          <span class="card-ico">🧮</span>
+          <div class="card-label">④ Mizan / 3026 Aylık Gelirler Kontrolü</div>
+          <div class="card-actions">
+            <button class="card-act-btn" onclick="navigateTo('mizan')">↗ Detay</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div>
+            <div style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">⚖ MİZAN KONTROL — Hesap Kartları ↔ 3026</div>
+            <div class="scrollbox">
+              <table class="tbl">
+                <thead><tr><th>İkon</th><th>Hesap</th><th>Hesap Adı</th><th>Durum</th></tr></thead>
+                <tbody id="mizanTbl"></tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">📦 3026 REVENUE — KDV Detayı</div>
+            <div class="scrollbox">
+              <table class="tbl">
+                <thead><tr><th>Revenue</th><th>Matrah</th><th>KDV%</th><th>Durum</th></tr></thead>
+                <tbody id="rev3026Tbl"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⑤ EKSTRA SATIŞ (3025) -->
+      <div class="card" style="grid-column:span 6">
+        <div class="card-head">
+          <span class="card-ico">🛒</span>
+          <div class="card-label">⑤ Ekstra Satış Raporu<br><b>3025 Extra Posting</b></div>
+          <div class="card-actions"><button class="card-act-btn" onclick="navigateTo('extra-sales')">↗ Detay</button></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start">
+          <div class="scrollbox">
+            <table class="tbl">
+              <thead><tr><th>Ürün Grubu</th><th>Hesap</th><th>Gelir</th><th>KDV%</th><th>Durum</th></tr></thead>
+              <tbody id="ekstraTbl"></tbody>
+            </table>
+          </div>
+          <div style="min-width:110px">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:600">EKSTRA TOPLAM</div>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:800;color:var(--orange)">₺106.961</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px">F&B+Diğer toplamı</div>
+            <span class="trend up" style="margin-top:7px;display:inline-flex">▲ MTD aktif</span>
+            <div class="prog-wrap">
+              <div class="prog-lbl"><span>3025 Eşleşme</span><span>—</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:70%;background:var(--orange)"></div></div>
+            </div>
+            <div style="font-size:9.5px;color:var(--muted);margin-top:3px">Mapping bekliyor: Diğer kategorisi</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="divider"><span>🏦 Kasa · Balans · KDV</span></div>
+
+      <!-- ⑥ KASA RAPORU (3010) -->
+      <div class="card" style="grid-column:span 4">
+        <div class="card-head">
+          <span class="card-ico">🏦</span>
+          <div class="card-label">⑥ Kasa Raporu<br><b>3010 Günlük Tahsilatlar</b></div>
+        </div>
+        <div id="kasaRows"></div>
+        <div class="kasa-total-bar">
+          <span>GÜNLÜK TAHSİLAT TOPLAMI</span>
+          <span class="kasa-total-val">₺473.246</span>
+        </div>
+      </div>
+
+      <!-- ⑦ 181 & 3010 BALANS KONTROL -->
+      <div class="card" style="grid-column:span 4">
+        <div class="card-head">
+          <span class="card-ico">⚖</span>
+          <div class="card-label">⑦ 181 ↔ 3010 Balans Kontrol<br><b>Hesap: 181.01.01.0001</b></div>
+        </div>
+        <div id="balRows"></div>
+      </div>
+
+      <!-- ⑧ KDV & KONAKLAMA VERGİSİ -->
+      <div class="card" style="grid-column:span 4">
+        <div class="card-head">
+          <span class="card-ico">🧾</span>
+          <div class="card-label">⑧ KDV & Konaklama Vergisi<br><b>Calc_KDVKontrol · Map_AccomTax</b></div>
+        </div>
+        <div id="kdvRows"></div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="divider"><span>🚨 Uyarılar · Dikkat · Bağlantılar</span></div>
+
+      <!-- ⑩ KRİTİK FARKLAR -->
+      <div class="card" style="grid-column:span 6">
+        <div class="card-head">
+          <span class="card-ico pulse">🚨</span>
+          <div class="card-label">⑩ Kritik Farklar & Hata Nedenleri<br><b>FarkAnalizi · Map_PossibleReasons</b></div>
+          <div class="card-actions"><button class="card-act-btn" onclick="navigateTo('reason-engine')">↗ Neden Motoru</button></div>
+        </div>
+        <div id="kritikRows"></div>
+      </div>
+
+      <!-- ⑪ DİKKAT -->
+      <div class="card" style="grid-column:span 6">
+        <div class="card-head">
+          <span class="card-ico">⚡</span>
+          <div class="card-label">⑪ Dikkat Edilmesi Gerekenler<br><b>UyariListesi · Aksiyon Gerektiren</b></div>
+        </div>
+        <div id="dikkatRows"></div>
+      </div>
+
+      <!-- ⑬ HIZLI BAĞLANTILAR -->
+      <div class="card" style="grid-column:span 12">
+        <div class="card-head">
+          <span class="card-ico">🔗</span>
+          <div class="card-label">⑬ Diğer Sayfalara Hızlı Bağlantılar</div>
+        </div>
+        <div class="links-wrap" id="linksWrap"></div>
+      </div>
+
+    </div><!-- /grid -->
+  </main>
+
+  <!-- ═══ KÜTÜPHANELER & SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="./assets/app.js"></script>
+
+  <!-- ─── CALENDAR & MINI BARS (Mevcut fonksiyonlar) ─── -->
+  <script>
+    const NOW = new Date();
+    const TR_M = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    const TR_D = ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'];
+    const pad = n => String(n).padStart(2,'0');
+    const fmtDate = d => `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}  ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    document.getElementById('datechip').textContent = fmtDate(NOW);
+    document.getElementById('lastupd').textContent = fmtDate(NOW);
+    setInterval(()=>{
+      const n=new Date();
+      document.getElementById('datechip').textContent=fmtDate(n);
+      document.getElementById('lastupd').textContent=fmtDate(n);
+    },30000);
+
+    // ─── CALENDAR ──────────────────────────────────────────────────────
+    let cY=NOW.getFullYear(), cM=NOW.getMonth();
+    const evDays=[1,7,14,22]; // rapor günleri
+    function renderCal(){
+      document.getElementById('calLbl').textContent=`${TR_M[cM]} ${cY}`;
+      const g=document.getElementById('calGrid'); g.innerHTML='';
+      TR_D.forEach(d=>{const el=document.createElement('div');el.className='cal-dlbl';el.textContent=d;g.appendChild(el);});
+      const first=new Date(cY,cM,1).getDay();
+      const dim=new Date(cY,cM+1,0).getDate();
+      const prevDim=new Date(cY,cM,0).getDate();
+      for(let i=0;i<first;i++){const el=document.createElement('div');el.className='cal-day other';el.textContent=prevDim-first+1+i;g.appendChild(el);}
+      for(let d=1;d<=dim;d++){
+        const el=document.createElement('div');
+        const isToday=d===NOW.getDate()&&cM===NOW.getMonth()&&cY===NOW.getFullYear();
+        el.className='cal-day'+(isToday?' today':'')+(evDays.includes(d)&&!isToday?' has-ev':'');
+        if(isToday){el.textContent=d;}else{el.textContent=d;}
+        g.appendChild(el);
+      }
+    }
+    function chMonth(dir){cM+=dir;if(cM>11){cM=0;cY++;}if(cM<0){cM=11;cY--;}renderCal();}
+    renderCal();
+
+    // ─── MINI BARS ─────────────────────────────────────────────────────
+    function makeBars(id,vals,color){
+      const c=document.getElementById(id);
+      vals.forEach((h,i)=>{
+        const b=document.createElement('div');
+        b.className='mini-bar';
+        b.style.height=h+'%';
+        b.style.background=i===vals.length-1?'rgba(255,255,255,.9)':`rgba(255,255,255,${.2+h/300})`;
+        c.appendChild(b);
+      });
+    }
+    makeBars('revBar',[55,62,48,70,58,80,65,72,60,84,75,88,65,78,100],'#fff');
+    makeBars('adrBar',[68,72,60,78,65,82,70,75,62,86,80,88,72,82,100],'#fff');
+
+    // ─── ④ MİZAN TABLOSU ──────────────────────────────────────────────
+    const mizanData=[
+      {ico:'🟨',id:'MZ001',hesap:'360.01.01.0016',ad:'Konaklama Vergisi',durum:'ok'},
+      {ico:'🧾',id:'MZ002',hesap:'391.01.01.0002',ad:'KDV %10',durum:'ok'},
+      {ico:'🧾',id:'MZ003',hesap:'391.01.01.0003',ad:'KDV %20',durum:'ok'},
+      {ico:'🛏',id:'MZ004',hesap:'600.01.01.0001',ad:'Oda Geliri %10',durum:'ok'},
+      {ico:'🍽',id:'MZ005',hesap:'600.01.02.0001',ad:'Yiyecek Geliri',durum:'ok'},
+      {ico:'🥤',id:'MZ006',hesap:'600.01.02.0002',ad:'Alkolsüz İçecek',durum:'ok'},
+      {ico:'🍷',id:'MZ007',hesap:'600.01.02.0003',ad:'Alkollü İçecek %20',durum:'ok'},
+      {ico:'📌',id:'MZ008',hesap:'600.01.03.0001',ad:'Diğer Gelir %20',durum:'ok'},
+      {ico:'🎉',id:'MZ010',hesap:'600.01.02.0005',ad:'Banquet',durum:'neutral'},
+    ];
+    const mt=document.getElementById('mizanTbl');
+    mizanData.forEach(r=>{
+      const pillMap={ok:'<span class="pill ok">✅ Mutabık</span>',warn:'<span class="pill warn">⚠ Fark</span>',err:'<span class="pill err">🔴 Kritik</span>',neutral:'<span class="pill neutral">— Veri Yok</span>'};
+      mt.innerHTML+=`<tr><td>${r.ico}</td><td class="muted">${r.hesap}</td><td style="font-family:'Inter';font-size:10.5px">${r.ad}</td><td>${pillMap[r.durum]}</td></tr>`;
+    });
+
+    // ─── 3026 REVENUE ÖZET ────────────────────────────────────────────
+    const rev3026=[
+      {rev:'Room Revenue',matrah:'₺845.200',kdv:'%10',durum:'ok'},
+      {rev:'Restaurant/F&B',matrah:'₺262.000',kdv:'%10',durum:'ok'},
+      {rev:'Alkollü İçecek',matrah:'₺98.000',kdv:'%20',durum:'ok'},
+      {rev:'Diğer Gelirler',matrah:'₺80.000',kdv:'%20',durum:'ok'},
+      {rev:'Mini Bar',matrah:'₺32.000',kdv:'%20',durum:'ok'},
+    ];
+    const rt=document.getElementById('rev3026Tbl');
+    rev3026.forEach(r=>{
+      rt.innerHTML+=`<tr><td style="font-family:'Inter';font-size:10.5px">${r.rev}</td><td class="pos">${r.matrah}</td><td class="muted">${r.kdv}</td><td><span class="pill ok">✅</span></td></tr>`;
+    });
+
+    // ─── ⑤ EKSTRA SATIŞ ───────────────────────────────────────────────
+    const ekstraData=[
+      {grup:'🍽 Restaurant',hesap:'600.01.02.0001',gelir:'₺64.602',kdv:'%10',durum:'ok'},
+      {grup:'🍷 Bar/İçecek',hesap:'600.01.02.0003',gelir:'₺32.036',kdv:'%20',durum:'ok'},
+      {grup:'📦 Diğer Servis',hesap:'600.01.03.0001',gelir:'₺10.323',kdv:'%20',durum:'warn'},
+      {grup:'🎉 Banquet',hesap:'600.01.02.0005',gelir:'—',kdv:'—',durum:'neutral'},
+    ];
+    const et=document.getElementById('ekstraTbl');
+    ekstraData.forEach(r=>{
+      const pillMap={ok:'<span class="pill ok">✅ Eşleşti</span>',warn:'<span class="pill warn">⚠ Eksik Map</span>',neutral:'<span class="pill neutral">— Veri Yok</span>'};
+      et.innerHTML+=`<tr><td style="font-family:'Inter'">${r.grup}</td><td class="muted" style="font-size:10px">${r.hesap}</td><td class="pos">${r.gelir}</td><td class="muted">${r.kdv}</td><td>${pillMap[r.durum]}</td></tr>`;
+    });
+
+    // ─── ⑥ KASA RAPORU ────────────────────────────────────────────────
+    const kasaData=[
+      {ico:'💳',lbl:'Kredi Kartı TL (9XX.TL)',val:'₺280.000',color:'#3b82f6'},
+      {ico:'💶',lbl:'Kredi Kartı EUR (9XX.EUR)',val:'€8.420 → ₺285.000',color:'#14b8a6'},
+      {ico:'💵',lbl:'Kredi Kartı USD (9XX.USD)',val:'$2.860 → ₺95.000',color:'#22c55e'},
+      {ico:'💴',lbl:'Nakit TL (9XX.KAS)',val:'₺42.600',color:'#6366f1'},
+      {ico:'🏦',lbl:'City Ledger (9XX.CL)',val:'₺10.639.493',color:'#f59e0b'},
+      {ico:'🎟',lbl:'Diğer Ödeme',val:'₺5.000',color:'#64748b'},
+    ];
+    const kr=document.getElementById('kasaRows');
+    kasaData.forEach(k=>{
+      kr.innerHTML+=`<div class="kasa-row"><div class="kasa-left"><span style="font-size:15px">${k.ico}</span>${k.lbl}</div><div class="kasa-right" style="color:${k.color}">${k.val}</div></div>`;
+    });
+
+    // ─── ⑦ BALANS KONTROL ────────────────────────────────────────────
+    const balData=[
+      {lbl:'181.01.01.0001 Bakiyesi',val:'₺6.359.035,78',cls:'neutral'},
+      {lbl:'3010 Total Balance',val:'₺6.359.518,05',cls:'neutral'},
+      {lbl:'Fark (181 - 3010)',val:'₺-482,27',cls:'warn'},
+      {lbl:'Tolerans Eşiği',val:'< ₺1,00 = Uyumlu',cls:'neutral'},
+      {lbl:'< ₺1.000 = Orta Fark',val:'Bu kontrol: ORTA FARK',cls:'warn'},
+      {lbl:'Son Güncelleme',val:'01/06/2026 06:24',cls:'neutral'},
+    ];
+    const br=document.getElementById('balRows');
+    balData.forEach(r=>{
+      const cls=r.cls==='warn'?'warn':r.cls==='err'?'neg':'neutral';
+      br.innerHTML+=`<div class="bal-row"><div class="bal-lbl">${r.lbl}</div><div class="bal-val ${cls==='warn'?'warn':cls==='neg'?'neg':''}">${r.val}</div></div>`;
+    });
+    br.innerHTML+=`<div class="bal-sum warn">⚡ ORTA FARK — Tolerans aşıldı. Fark: ₺482,27 — Aksiyon gerekli.</div>`;
+
+    // ─── ⑧ KDV & KONAKLAMA VERGİSİ ──────────────────────────────────
+    const kdvData=[
+      {ico:'🟢',lbl:'KDV %10 — Oda Geliri (391.01.01.0002)',val:'₺84.520',bg:'rgba(34,197,94,.07)',pill:'ok'},
+      {ico:'🟢',lbl:'KDV %10 — Yiyecek Geliri',val:'₺26.200',bg:'rgba(34,197,94,.07)',pill:'ok'},
+      {ico:'🟢',lbl:'KDV %20 — Alkollü/Diğer (391.01.01.0003)',val:'₺19.600',bg:'rgba(99,102,241,.06)',pill:'ok'},
+      {ico:'🟢',lbl:'KDV %20 — Diğer Gelirler',val:'₺16.000',bg:'rgba(99,102,241,.06)',pill:'ok'},
+      {ico:'🟨',lbl:'Konaklama Vergisi (360.01.01.0016)',val:'Bekleniyor',bg:'rgba(245,158,11,.07)',pill:'warn'},
+      {ico:'📦',lbl:'Toplam KDV Yükü',val:'₺146.320',bg:'rgba(15,23,42,.04)',pill:'info'},
+    ];
+    const kd=document.getElementById('kdvRows');
+    kdvData.forEach(k=>{
+      const pillMap={ok:'<span class="pill ok">✅ Mutabık</span>',warn:'<span class="pill warn">⚠ Kontrol Et</span>',info:'<span class="pill info">ℹ Toplam</span>'};
+      kd.innerHTML+=`<div class="kdv-pill" style="background:${k.bg}"><div style="display:flex;align-items:center;gap:6px"><span>${k.ico}</span><div class="kdv-lbl">${k.lbl}</div></div><div style="display:flex;align-items:center;gap:8px"><div class="kdv-val">${k.val}</div>${pillMap[k.pill]}</div></div>`;
+    });
+
+    // ─── ⑩ KRİTİK FARKLAR ────────────────────────────────────────────
+    const kritikData=[
+      {type:'amber',ico:'⚡',title:'181 ↔ 3010 Balans Farkı: ₺482,27 (ORTA FARK)',desc:'[RN005/RN012] Rapor farklı tarih/saatte alınmış olabilir. Guest ledger devri, previous balance veya tahakkuk kapanışı muhasebeye tam aktarılmamış. 3010 rapor tarihi, 181 hesap kartı dönem hareketleri ve city ledger transferleri kontrol edilmeli.'},
+      {type:'blue',ico:'ℹ',title:'3026 ↔ 3035 Kapsam Farkı Olası',desc:'[RN008] Raporlar farklı tarih/saatte alınmış olabilir. 3035 MTD/YTD özetinde farklı kapsam; revenue group kırılımları aynı değil. Gün sonu kapanışından sonra aynı anda alınmalı.'},
+      {type:'amber',ico:'⚠',title:'3025 Extra Posting — Mapping Eksik Kalem',desc:'[RN007] Ekstra satış raporunda "Diğer" kategorisi doğru hesap koduna eşleşmemiş. MAP_URUN_ACIKLAMA tablosunda eksik eşleşme var. Aksiyon: Map tablosunu güncelle.'},
+      {type:'green',ico:'✅',title:'KDV Mutabakatı — 4/4 Kayıt Uyumlu',desc:'[KDV001-KDV004] 3026 KDV %10 ve %20 tutarları ile 391.01.01.0002 ve 391.01.01.0003 hesapları tam eşleşiyor. Fark: ₺0.'},
+    ];
+    const kr2=document.getElementById('kritikRows');
+    kritikData.forEach(a=>{
+      kr2.innerHTML+=`<div class="alert-row ${a.type}"><div class="alert-ico">${a.ico}</div><div><div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div></div></div>`;
+    });
+
+    // ─── ⑪ DİKKAT EDİLMESİ GEREKENLER ───────────────────────────────
+    const dikkatData=[
+      {ico:'⚡',txt:'<em>181 ↔ 3010 farkı ₺482,27</em> — ORTA FARK seviyesinde. 3010 raporu ve 181 hesap kartı aynı kapanış saatinde yeniden alınmalı.'},
+      {ico:'🟨',txt:'<em>Konaklama Vergisi (Kon.Tax)</em> kontrolü henüz tamamlanmadı. 3026_BOYALI_KON_TAX sayfasından Kon.Tax mapping\'i doğrula.'},
+      {ico:'📦',txt:'<em>3025 Extra Posting mapping eksik</em> — "Diğer" kategorisi eşleşmemiş. MAP_URUN_ACIKLAMA tablosunu güncelle.'},
+      {ico:'🔄',txt:'<em>Gün sonu kapanışı</em> 23:00\'den önce tamamlanmalı. Tüm tahsilatlar ve revenue kayıtları kesitten önce girilmeli.'},
+      {ico:'💱',txt:'<em>Güncel kur girişi</em> — GUNCEL_KURLAR sayfasında EUR/TRY ve USD/TRY kurları güncellendi mi kontrol et.'},
+      {ico:'📜',txt:'<em>Otomatik log</em> OTOMATIK_LOG sayfasında izlenebilir. Son okuma: 01/06/2026 06:24 · Durum: ORTA FARK.'},
+      {ico:'🧠',txt:'<em>Fark Neden Motoru</em> (FARK_NEDEN_MOTORU) aktif. Fark tespitinde olası nedenler otomatik eşleştirildi.'},
+    ];
+    const di=document.getElementById('dikkatRows');
+    dikkatData.forEach(n=>{
+      di.innerHTML+=`<div class="note-row"><span class="note-ico">${n.ico}</span><div class="note-text">${n.txt}</div></div>`;
+    });
+
+    // ─── ⑬ BAĞLANTILAR ────────────────────────────────────────────────
+    const links=[
+      {ico:'🏠',lbl:'Dashboard'},
+      {ico:'🤖',lbl:'Otomatik Kontrol'},
+      {ico:'📥',lbl:'Veri Yükleme'},
+      {ico:'⚖',lbl:'181 ↔ 3010'},
+      {ico:'🧮',lbl:'Mizan Kontrol'},
+      {ico:'🟨',lbl:'3026 Kon.Tax'},
+      {ico:'📊',lbl:'Fark Analizi'},
+      {ico:'🚨',lbl:'Uyarı Listesi'},
+      {ico:'💱',lbl:'Güncel Kurlar'},
+      {ico:'🛒',lbl:'Ekstra Satış'},
+      {ico:'🧠',lbl:'Neden Motoru'},
+      {ico:'📜',lbl:'Log'},
+      {ico:'📦',lbl:'3026 Aylık Gelirler'},
+      {ico:'🔢',lbl:'KDV Kontrol'},
+      {ico:'⚙',lbl:'Otomatik Ayarlar'},
+      {ico:'📌',lbl:'Ana Menü'},
+    ];
+    const lw=document.getElementById('linksWrap');
+    links.forEach(l=>{
+      lw.innerHTML+=`<a class="link-chip"><span style="font-size:16px">${l.ico}</span>${l.lbl}</a>`;
+    });
+  </script>
+
+</body>
+</html>
