@@ -1,0 +1,1 @@
+2026-06-30T21:15:25.642Z | Çalıştı | Dosya Okuma | ADAM_EVE/3010_balans.csv | ADAM & EVE OTEL / Raw_3010 olarak okundu. Satır: 2 | 

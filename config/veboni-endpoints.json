@@ -1,0 +1,14 @@
+{
+  "description": "Gerçek Veboni/ERP endpoint path ve parametreleri burada tanımlanır. {{hotelId}}, {{dateFrom}}, {{dateTo}}, {{reportCode}} değişkenleri otomatik doldurulur.",
+  "reports": {
+    "Raw_3010": {"code":"3010", "label":"3010 Kasa / Balance", "method":"GET", "path":"/reports/3010", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}},
+    "Raw_3014": {"code":"3014", "label":"3014 Kasa / Tahsilat", "method":"GET", "path":"/reports/3014", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}},
+    "Raw_3025": {"code":"3025", "label":"3025 Ekstra Satış", "method":"GET", "path":"/reports/3025", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}},
+    "Raw_3026": {"code":"3026", "label":"3026 Aylık Gelir / Kon.Tax", "method":"GET", "path":"/reports/3026", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}},
+    "Raw_3035": {"code":"3035", "label":"3035 Revenue / Mizan", "method":"GET", "path":"/reports/3035", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}},
+    "Raw_3000": {"code":"3000", "label":"3000 Raporu", "method":"GET", "path":"/reports/3000", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}},
+    "Raw_181": {"code":"181", "label":"181 Balance", "method":"GET", "path":"/accounting/balance/181", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}},
+    "Raw_HesapKartlari": {"code":"HESAP_KARTLARI", "label":"Hesap Kartları Rakamları", "method":"GET", "path":"/accounting/account-cards", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}},
+    "Raw_Muhasebe": {"code":"MUHASEBE_HAREKETLERI", "label":"Muhasebe Hareketleri", "method":"GET", "path":"/accounting/movements", "query":{"hotelId":"{{hotelId}}", "dateFrom":"{{dateFrom}}", "dateTo":"{{dateTo}}"}}
+  }
+}

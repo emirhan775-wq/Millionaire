@@ -1,0 +1,7 @@
+[
+  {"id":"ADAM_EVE", "name":"ADAM & EVE OTEL", "short":"A&E", "erpId":"", "terms":["ADAM","EVE","ADAM EVE","ADAMEVE"]},
+  {"id":"SEGINUS", "name":"SEGINUS OTEL", "short":"SEG", "erpId":"", "terms":["SEGINUS","SEGİNUS"]},
+  {"id":"ALHAMBRA", "name":"ALHAMBRA OTEL", "short":"ALH", "erpId":"", "terms":["ALHAMBRA"]},
+  {"id":"HOLIDAY", "name":"HOLIDAY OTEL", "short":"HOL", "erpId":"", "terms":["HOLIDAY"]},
+  {"id":"DRAGON", "name":"DRAGON OTEL", "short":"DRG", "erpId":"", "terms":["DRAGON"]}
+]

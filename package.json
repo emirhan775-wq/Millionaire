@@ -1,0 +1,18 @@
+{
+  "name": "erp-mutabakat-html-system-v223-otomatik-fix",
+  "version": "2.2.3",
+  "private": true,
+  "description": "5 otel ERP/PMS mutabakat dashboardu + otomatik klasör robotu + opsiyonel Veboni API connector",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "rebuild": "node server.js --rebuild-only",
+    "check": "node --check server.js && node --check assets/app.js && node --check connectors/veboni-api.js",
+    "auto": "node server.js"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
